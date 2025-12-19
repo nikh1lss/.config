@@ -9,6 +9,17 @@ backup_if_exists() {
     fi
 }
 
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh-My-Zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+
+if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+    echo "Installing Powerlevel10k"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+fi
+
 backup_if_exists "$HOME/.config"
 mkdir -p "$HOME/.config" 
 ln -sf "$DOTFILES_DIR/config" "$HOME/.config"
@@ -32,10 +43,10 @@ backup_if_exists "$HOME/.oh-my-zsh/custom/aliases.zsh"
 ln -sf "$DOTFILES_DIR/aliases.zsh" "$HOME/.oh-my-zsh/custom/aliases.zsh"
 
 backup_if_exists "$HOME/.oh-my-zsh/custom/functions.zsh"
-ln -sf "$DOTFILES_DIR/profile" "$HOME/.oh-my-zsh/custom/functions.zsh"
+ln -sf "$DOTFILES_DIR/functions.zsh" "$HOME/.oh-my-zsh/custom/functions.zsh"
 
 backup_if_exists "$HOME/.oh-my-zsh/custom/macros.zsh"
-ln -sf "$DOTFILES_DIR/profile" "$HOME/.oh-my-zsh/custom/macros.zsh"
+ln -sf "$DOTFILES_DIR/macros.zsh" "$HOME/.oh-my-zsh/custom/macros.zsh"
 
 
 if [ ! -f "$HOME/.gitconfig.local" ]; then
