@@ -1,0 +1,6 @@
+# vim: set filetype=gitconfig:
+# filetype modeline so nvim recognizes this file and runs autocmds when editing directly
+# and not via symlinks
+
+[include]
+    path = ~/.gitconfig.local
