@@ -28,6 +28,15 @@ ln -sf "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
 backup_if_exists "$HOME/.profile"
 ln -sf "$DOTFILES_DIR/profile" "$HOME/.profile"
 
+backup_if_exists "$HOME/.oh-my-zsh/custom/aliases.zsh"
+ln -sf "$DOTFILES_DIR/aliases.zsh" "$HOME/.oh-my-zsh/custom/aliases.zsh"
+
+backup_if_exists "$HOME/.oh-my-zsh/custom/functions.zsh"
+ln -sf "$DOTFILES_DIR/profile" "$HOME/.oh-my-zsh/custom/functions.zsh"
+
+backup_if_exists "$HOME/.oh-my-zsh/custom/macros.zsh"
+ln -sf "$DOTFILES_DIR/profile" "$HOME/.oh-my-zsh/custom/macros.zsh"
+
 
 if [ ! -f "$HOME/.gitconfig.local" ]; then
     cat > "$HOME/.gitconfig.local" << 'EOF'
@@ -40,3 +49,6 @@ fi
 
 
 echo "Dotfiles installed"
+
+
+# refactor this, it sucks
