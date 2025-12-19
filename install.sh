@@ -1,16 +1,33 @@
-DOTFILES_DIR  = "$HOME/dotfiles"
+#!/bin/zsh
 
+DOTFILES_DIR="$HOME/dotfiles"
+
+backup_if_exists() {
+    if [ -e "$1" ] && [ ! -L "$1" ]; then
+        echo "Backing up existing $1 to $1.backup"
+        mv "$1" "$1.backup"
+    fi
+}
+
+backup_if_exists "$HOME/.config"
+mkdir -p "$HOME/.config" 
+ln -sf "$DOTFILES_DIR/config" "$HOME/.config"
+
+backup_if_exists "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
-ln -sf "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"    
-ln -sf "$DOTFILES_DIR/config" "$HOME/.config" 
+
+backup_if_exists "$HOME/.gitconfig"
+ln -sf "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
+
+backup_if_exists "$HOME/.bashrc"
 ln -sf "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
-ln -sf "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
+
+backup_if_exists "$HOME/.p10k.zsh"
 ln -sf "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
+
+backup_if_exists "$HOME/.profile"
 ln -sf "$DOTFILES_DIR/profile" "$HOME/.profile"
 
-mkdir -p "$HOME/.config" 
-
-ln -sf "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 
 if [ ! -f "$HOME/.gitconfig.local" ]; then
     cat > "$HOME/.gitconfig.local" << 'EOF'
