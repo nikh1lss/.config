@@ -5,7 +5,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 # General Shortcuts
-alias g=giti
+alias g=git
+alias gs="git status"
 
 alias ccd="pwd | c"  # copy current directoryi
 
