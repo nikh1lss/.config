@@ -7,8 +7,9 @@ alias .....="cd ../../../.."
 # General Shortcuts
 alias g=git
 alias gs="git status"
+alias n="nvim"
 
-alias ccd="pwd | c"  # copy current directoryi
+alias ccd="pwd | c" # copy current directory
 
 # Print each PATH entry on a seperate line
 alias path='echo -e ${PATH//:/\\n}'
