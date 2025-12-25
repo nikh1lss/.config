@@ -1,7 +1,6 @@
 -- File for autocommands
 
 -- Autocommand to standardize tabs for all filetypes
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()

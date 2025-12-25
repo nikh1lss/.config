@@ -22,6 +22,22 @@ install_go() {
     echo "Go installed"
 }
 
+install_fonts() {
+    local font_dir = "$HOME/.local/share/fonts"
+    mkdir -p "$font_dir"
+    cd "$font_dir"
+    local base_url="https://github.com/romkatv/powerlevel10k-media/raw/master"
+    curl -fLO "$base_url/MesloLGS%20NF%20Regular.ttf"
+    curl -fLO "$base_url/MesloLGS%20NF%20Bold.ttf"
+    curl -fLO "$base_url/MesloLGS%20NF%20Italic.ttf"
+    curl -fLO "$base_url/MesloLGS%20NF%20Bold%20Italic.ttf"
+
+    # refresh font cache
+    fc-cache -fv
+    cd -
+    echo "MesloLGS NF installed and set"
+}
+
 backup_if_exists() {
     if [ -e "$1" ] && [ ! -L "$1" ]; then
         echo "Backing up existing $1 to $1.backup"
@@ -40,7 +56,6 @@ if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
 fi
 
 backup_if_exists "$HOME/.config"
-mkdir -p "$HOME/.config"
 ln -sf "$DOTFILES_DIR/config" "$HOME/.config"
 
 backup_if_exists "$HOME/.zshrc"
@@ -79,6 +94,9 @@ fi
 # language install
 install_go
 
+# font install for powerlevel10k
+install_fonts
+
 # can always change this here and community.lua if
 # language is not desired (i.e. prolog)
 sudo apt update
@@ -92,7 +110,13 @@ sudo apt install -y \
     maven \
     shellcheck \
     postgresql-client \
-    swi-prolog
+    swi-prolog \
+    fzf \ 
+plocate
+
+# Update locate database
+echo "Updating locate database, this may take a while"
+sudo updatedb
 
 # Rust
 if ! command -v rustc &>/dev/null; then
@@ -119,5 +143,3 @@ fi
 echo "Dotfiles installed, restart zsh!"
 
 source ~/.zshrc
-
-# refactor this, it sucks
