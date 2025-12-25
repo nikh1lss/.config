@@ -24,13 +24,13 @@ return {
     filetypes = {
       -- see `:h vim.filetype.add` for usage
       extension = {
-        foo = "fooscript",
+        -- foo = "fooscript",
       },
       filename = {
-        [".foorc"] = "fooscript",
+        -- [".foorc"] = "fooscript",
       },
       pattern = {
-        [".*/etc/foo/.*"] = "fooscript",
+        -- [".*/etc/foo/.*"] = "fooscript",
       },
     },
     -- vim options can be configured here
@@ -41,6 +41,19 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
+        showmode = true, -- show vim mode
+        scrolloff = 8,
+        sidescrolloff = 8,
+        colorcolumn = "100",
+        -- autoindent = true, default in nvim
+        ignorecase = true,
+        smartcase = true,
+        cursorline = true,
+        splitbelow = true,
+        splitright = true,
+        clipboard = "unnamedplus",
+        termguicolors = true,
+        conceallevel = 0,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
