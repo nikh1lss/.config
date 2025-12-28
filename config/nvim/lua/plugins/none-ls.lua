@@ -8,19 +8,19 @@ return {
     -- local null_ls = require "null-ls"
     local null_ls = require "null-ls"
 
+    -- Remove any existing checkstyle source
+    opts.sources = vim.tbl_filter(function(source) return source.name ~= "checkstyle" end, opts.sources or {})
+
+    -- Add checkstyle with proper config
+    table.insert(
+      opts.sources,
+      null_ls.builtins.diagnostics.checkstyle.with {
+        extra_args = { "-c", vim.fn.expand "~/dotfiles/config/checkstyle/checkstyle.xml" },
+      }
+    )
+
     -- Check supported formatters and linters
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-
-    -- Only insert new sources, do not replace the existing ones
-    -- (If you wish to replace, use `opts.sources = {}` instead of the `list_insert_unique` function)
-    opts.sources = require("astrocore").list_insert_unique(opts.sources, {
-      -- Set a formatter
-      -- null_ls.builtins.formatting.stylua,
-      -- null_ls.builtins.formatting.prettier,
-      null_ls.builtins.diagnostics.checkstyle.with {
-        extra_args = { "-c", vim.fn.expand "~/dotfiles/config/checkstyle/checkstyle.xml" },
-      },
-    })
   end,
 }
