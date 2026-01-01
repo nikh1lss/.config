@@ -27,5 +27,3 @@ function led() {
     nvim "$file"
   fi
 }
-
-# add function with fzf config to search current directory

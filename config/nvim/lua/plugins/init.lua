@@ -1,19 +1,7 @@
 return {
   "nvim-lua/plenary.nvim",
 
-  {
-    "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
-    opts = require "configs.conform",
-  },
-
   -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
@@ -92,11 +80,35 @@ return {
     end,
   },
 
-  -- formatting!
+  -- formatting, need to manually download formatters, mason will not
+  -- i.e. :MasonInstall stylua prettierd google-java-format clang-format
+  -- or with :Mason
   {
     "stevearc/conform.nvim",
+    event = "BufWritePre",
     opts = {
-      formatters_by_ft = { lua = { "stylua" } },
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true,
+      },
+      formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "ruff_format" },
+        javascript = { "prettierd" },
+        typescript = { "prettierd" },
+        java = { "google-java-format" },
+        c = { "clang-format" },
+        cpp = { "clang-format" },
+        rust = { "rustfmt" },
+      },
+      formatters = {
+        ["google-java-format"] = {
+          prepend_args = { "--aosp" },
+        },
+        ["clang-format"] = {
+          prepend_args = { "--style={IndentWidth: 4}" },
+        },
+      },
     },
   },
 
@@ -110,6 +122,12 @@ return {
   },
 
   -- lsp stuff
+  -- nvim-jdtls configures everything
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = "java",
+  },
+
   {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
@@ -123,6 +141,119 @@ return {
     event = "User FilePost",
     config = function()
       require("configs.lspconfig").defaults()
+    end,
+  },
+
+  {
+    "mason-org/mason-lspconfig.nvim",
+    lazy = false,
+    opts = {
+      ensure_installed = { "lua_ls", "pyright", "ts_ls", "jdtls", "clangd", "rust_analyzer" },
+      automatic_installation = true,
+      automatic_enable = {
+        exclude = {
+          -- needs external plugin
+          "jdtls",
+        },
+      },
+      -- Remove old lsp handlers, use vim.lsp.enable to handle setup
+    },
+
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+    },
+  },
+
+  -- linter
+  -- rustfmt and clippy need to be installed with rustup, not mason
+  -- rustup component add rustfmt clippy
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local lint = require "lint"
+
+      lint.linters_by_ft = {
+        -- add linters here
+        javascript = { "eslint_d" },
+        typescript = { "eslint_d" },
+        python = { "ruff" },
+        java = { "checkstyle" },
+        c = { "cpplint" },
+        cpp = { "cpplint" },
+      }
+
+      local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+      vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
+        group = lint_augroup,
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+
+      -- keymapping to toggle linter
+      vim.keymap.set("n", "<leader>ll", function()
+        lint.try_lint()
+      end, { desc = "Trigger linting for current file" })
+    end,
+  },
+
+  -- automatically install via mason
+  {
+    "rshkarin/mason-nvim-lint",
+    dependencies = { "mason.nvim", "nvim-lint" },
+    lazy = false, -- annoying
+    config = function()
+      require("mason-nvim-lint").setup {
+        ensure_installed = { "eslint_d", "ruff", "checkstyle", "cpplint" },
+      }
+    end,
+  },
+
+  -- debuggers
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      local dap, dapui = require "dap", require "dapui"
+
+      dapui.setup()
+
+      -- Auto open/close dap-ui
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+
+      -- Keymaps
+      vim.keymap.set("n", "<F5>", dap.continue)
+      vim.keymap.set("n", "<F10>", dap.step_over)
+      vim.keymap.set("n", "<F11>", dap.step_into)
+      vim.keymap.set("n", "<F12>", dap.step_out)
+      vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+    end,
+  },
+
+  -- need to manually install debuggers through :Mason, ensure_installed not working?
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    lazy = false,
+    dependencies = { "mason.nvim", "nvim-dap" },
+    config = function()
+      require("mason-nvim-dap").setup {
+        ensure_installed = { "bash" }, -- now works
+        automatic_installation = true,
+        handlers = {}, -- auto-configures adapters
+      }
     end,
   },
 
@@ -164,7 +295,7 @@ return {
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
-       "https://codeberg.org/FelipeLema/cmp-async-path.git",
+        "https://codeberg.org/FelipeLema/cmp-async-path.git",
       },
     },
     opts = function()
@@ -188,7 +319,7 @@ return {
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
-      return require "configs.treesitter" -- configs.treesitter 
+      return require "configs.treesitter" -- configs.treesitter
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)

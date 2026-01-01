@@ -35,25 +35,8 @@ M.on_init = function(client, _)
   end
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
-M.capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { "markdown", "plaintext" },
-  snippetSupport = true,
-  preselectSupport = true,
-  insertReplaceSupport = true,
-  labelDetailsSupport = true,
-  deprecatedSupport = true,
-  commitCharactersSupport = true,
-  tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  },
-}
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
+M.capabilities = cmp_nvim_lsp.default_capabilities()
 
 M.defaults = function()
   dofile(vim.g.base46_cache .. "lsp")
@@ -80,13 +63,30 @@ M.defaults = function()
   }
 
   -- Use new vim.lsp.config API for Neovim 0.11+
+  -- Global config for all servers
   vim.lsp.config("*", { capabilities = M.capabilities, on_init = M.on_init })
+
+  -- Lua-specific settings
   vim.lsp.config("lua_ls", { settings = lua_lsp_settings })
-  vim.lsp.enable "lua_ls"
+
+  -- Enable all servers (except jdtls, this is handled by nvim-jdtls)
+  vim.lsp.enable {
+    "lua_ls",
+    "clangd",
+    "pyright",
+    "ts_ls",
+    "html",
+    "cssls",
+    "rust_analyzer",
+  }
 end
 
-
-M.servers = { "html", "cssls" }
-vim.lsp.enable(M.servers)
+-- autocmd for jdtls setup
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "java",
+  callback = function(args)
+    require("jdtls.jdtls_setup").setup()
+  end,
+})
 
 return M

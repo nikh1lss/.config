@@ -27,3 +27,4 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 [ -f "/home/nikhil/.ghcup/env" ] && . "/home/nikhil/.ghcup/env" # ghcup-env
+. "$HOME/.cargo/env"
