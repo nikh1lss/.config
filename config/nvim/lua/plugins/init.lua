@@ -1,3 +1,5 @@
+-- If ensure_installed fails for a plugin, please install manually via mason
+
 return {
   "nvim-lua/plenary.nvim",
 

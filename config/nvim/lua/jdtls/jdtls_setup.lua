@@ -8,6 +8,8 @@ function M.setup()
     .. package.config:sub(1, 1)
     .. project_name
 
+  local lombok_path = vim.fn.expand "~/dotfiles/config/nvim/lua/jdtls/lombok.jar"
+
   -- See `:help vim.lsp.start` for an overview of the supported `config` options.
   local config = {
     name = "jdtls",
@@ -20,6 +22,7 @@ function M.setup()
     -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
     cmd = {
       "jdtls",
+      "--jvm-arg=-javaagent:" .. lombok_path,
       "-data",
       workspace_dir,
     },
@@ -32,7 +35,13 @@ function M.setup()
     -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
     -- for a list of options
     settings = {
-      java = {},
+      java = {
+        project = {
+          referencedLibraries = {
+            lombok_path,
+          },
+        },
+      },
     },
 
     -- This sets the `initializationOptions` sent to the language server
