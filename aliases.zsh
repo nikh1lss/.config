@@ -8,6 +8,7 @@ alias .....="cd ../../../.."
 alias g=git
 alias gs="git status"
 alias n="nvim"
+alias c="clear"
 
 alias ccd="pwd | c" # copy current directory
 

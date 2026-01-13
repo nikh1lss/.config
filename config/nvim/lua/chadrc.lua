@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "gruvbox",
+    theme = "ayu_dark",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },
@@ -13,7 +13,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "onedark", "one_light" },
   },
 
@@ -26,7 +26,7 @@ local options = {
       format_colors = { lsp = true, icon = "󱓻" },
     },
 
-    telescope = { style = "borderless" }, -- borderless / bordered
+    telescope = { style = "bordered" }, -- borderless / bordered
 
     statusline = {
       enabled = true,

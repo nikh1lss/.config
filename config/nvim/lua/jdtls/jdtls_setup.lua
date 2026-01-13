@@ -29,6 +29,7 @@ function M.setup()
 
     -- `root_dir` must point to the root of your project.
     -- See `:help vim.fs.root`
+    -- yes the .git marker is preferable rather than defaulting to vim.fn.getcwd() for standalone files
     root_dir = vim.fs.root(0, { "gradlew", ".git", "mvnw", "pom.xml", "build.gradle" }),
 
     -- Here you can configure eclipse.jdt.ls specific settings

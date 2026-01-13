@@ -68,7 +68,7 @@ return {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = function()
-      return require "configs.nvimtree" -- configs.nvimtree
+      return require "configs.nvimtree"
     end,
   },
 
@@ -119,7 +119,7 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "User FilePost",
     opts = function()
-      return require "configs.gitsigns" -- configs.gitsigns
+      return require "configs.gitsigns"
     end,
   },
 
@@ -134,7 +134,7 @@ return {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = function()
-      return require "configs.mason" -- configs.mason
+      return require "configs.mason"
     end,
   },
 
@@ -274,7 +274,7 @@ return {
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           require("luasnip").config.set_config(opts)
-          require "configs.luasnip" -- configs.luasnip
+          require "configs.luasnip"
         end,
       },
 
@@ -304,7 +304,7 @@ return {
       },
     },
     opts = function()
-      return require "configs.cmp" -- configs.cmp
+      return require "configs.cmp"
     end,
   },
 
@@ -313,7 +313,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     opts = function()
-      return require "configs.telescope" -- configs.telescope
+      return require "configs.telescope"
     end,
   },
 
@@ -324,7 +324,7 @@ return {
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
-      return require "configs.treesitter" -- configs.treesitter
+      return require "configs.treesitter"
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
