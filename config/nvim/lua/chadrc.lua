@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "ayu_dark",
+    theme = "gruvbox",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },
@@ -13,7 +13,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = true,
+    transparency = false,
     theme_toggle = { "onedark", "one_light" },
   },
 

@@ -83,6 +83,10 @@ map(
   { desc = "telescope find all files" }
 )
 
+-- gitsigns
+map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "git toggle blame" })
+map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git full file blame" })
+
 -- terminal
 map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
@@ -114,4 +118,3 @@ map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
 map("n", "<leader>wk", function()
   vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
 end, { desc = "whichkey query lookup" })
-
