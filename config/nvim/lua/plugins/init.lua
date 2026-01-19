@@ -304,7 +304,7 @@ return {
         "https://codeberg.org/FelipeLema/cmp-async-path.git",
       },
     },
-    opts = function()
+    config = function()
       return require "configs.cmp"
     end,
   },

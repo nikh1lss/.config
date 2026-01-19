@@ -2,8 +2,9 @@ dofile(vim.g.base46_cache .. "cmp")
 
 local cmp = require "cmp"
 
-local options = {
-  completion = { completeopt = "menu,menuone" },
+cmp.setup {
+  preselect = cmp.PreselectMode.None,
+  completion = { completeopt = "menu,menuone,noselect" },
 
   snippet = {
     expand = function(args)
@@ -21,7 +22,7 @@ local options = {
 
     ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
+      select = false,
     },
 
     ["<Tab>"] = cmp.mapping(function(fallback)
@@ -52,6 +53,7 @@ local options = {
     { name = "nvim_lua" },
     { name = "async_path" },
   },
+  -- merge nvchad's formatting/window stuff
+  formatting = require("nvchad.cmp").formatting,
+  window = require("nvchad.cmp").window,
 }
-
-return vim.tbl_deep_extend("force", options, require "nvchad.cmp")
