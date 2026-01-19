@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "gruvbox",
+    theme = "tokyonight",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },
@@ -13,7 +13,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "onedark", "one_light" },
   },
 
@@ -26,7 +26,7 @@ local options = {
       format_colors = { lsp = true, icon = "󱓻" },
     },
 
-    telescope = { style = "bordered" }, -- borderless / bordered
+    telescope = { style = "borderless" }, -- borderless / bordered
 
     statusline = {
       enabled = true,
@@ -50,7 +50,8 @@ local options = {
 
   nvdash = {
     load_on_startup = true,
-    header = {
+    header = {},
+    --[[ header = {
       "",
       "",
       "                   ▔▁                 ▔▁▁                    ",
@@ -72,16 +73,21 @@ local options = {
       "                      ▔▀▜██████████▛▀▔                       ",
       "",
       "",
-    },
+    }, ]]
 
     buttons = {
-      { txt = "  Find File", keys = "f", cmd = "Telescope find_files" },
-      { txt = "  Recent Files", keys = "o", cmd = "Telescope oldfiles" },
-      { txt = "󰈭  Find Word", keys = "w", cmd = "Telescope live_grep" },
+      { txt = "", keys = "f", cmd = "Telescope find_files" },
+      { txt = "", keys = "o", cmd = "Telescope oldfiles" },
+      { txt = "󰈭", keys = "w", cmd = "Telescope live_grep" },
+      { txt = "󱥚", keys = "s", cmd = "" },
+      { txt = "", keys = "'", cmd = "" },
+      -- { txt = "  Find File", keys = "f", cmd = "Telescope find_files" },
+      -- { txt = "  Recent Files", keys = "o", cmd = "Telescope oldfiles" },
+      -- { txt = "󰈭  Find Word", keys = "w", cmd = "Telescope live_grep" },
       -- { txt = "󱥚  Themes", keys = "t", cmd = ":lua require('nvchad.themes').open()" },
       -- { txt = "  Mappings", keys = "m", cmd = "NvCheatsheet" },
-      { txt = "   Last Session", keys = "s", cmd = "" },
-      { txt = "   Bookmarks", keys = "'", cmd = "" },
+      -- { txt = "󱥚 Last Session", keys = "s", cmd = "" },
+      -- { txt = " Bookmarks", keys = "'", cmd = "" },
 
       { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
 

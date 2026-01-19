@@ -2,4 +2,5 @@
 go/
 *.txti
 
-config/neofetch
+neofetch
+fastfetch

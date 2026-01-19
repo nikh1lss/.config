@@ -76,6 +76,7 @@ return {
     "folke/which-key.nvim",
     keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
     cmd = "WhichKey",
+    lazy = false,
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
       return {}
@@ -328,6 +329,14 @@ return {
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
+
+  {
+    "numToStr/Comment.nvim",
+    event = "User FilePost",
+    opts = function()
+      return require "configs.comment"
     end,
   },
 }

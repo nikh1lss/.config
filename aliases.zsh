@@ -25,6 +25,3 @@ alias f='fzf --height=90% --preview "bat --style=numbers --color=always --line-r
 alias t=tmux
 alias tns='tmux new -s '
 alias tls='tmux ls'
-
-alias discord='(cd /mnt/c/Users/nsing/AppData/Local/Discord/app-1.0.9220; cmd.exe /c start Discord.exe)'
-alias steam='(cd /mnt/c/Program\ Files\ \(x86\)/Steam; cmd.exe /c start steam.exe)'

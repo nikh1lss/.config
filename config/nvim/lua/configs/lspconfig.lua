@@ -78,6 +78,7 @@ M.defaults = function()
     "html",
     "cssls",
     "rust_analyzer",
+    "jsonls",
   }
 end
 
