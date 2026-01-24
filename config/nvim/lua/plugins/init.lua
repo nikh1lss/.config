@@ -339,4 +339,14 @@ return {
       return require "configs.comment"
     end,
   },
+
+  -- alpha dashboard
+  {
+    "goolord/alpha-nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require "configs.alpha"
+    end,
+  },
 }
