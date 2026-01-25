@@ -6,6 +6,10 @@ cmp.setup {
   preselect = cmp.PreselectMode.None,
   completion = { completeopt = "menu,menuone,noselect" },
 
+  experimental = {
+    ghost_text = { hl_group = "Comment" },
+  },
+
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)

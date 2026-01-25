@@ -74,12 +74,22 @@ return {
 
   {
     "folke/which-key.nvim",
-    keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
     cmd = "WhichKey",
     lazy = false,
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
-      return {}
+      return {
+        delay = 99999,
+        triggers = {
+          { "<leader>", mode = { "n", "v" } },
+          { "<c-w>", mode = "n" },
+          { '"', mode = "n" },
+          { "'", mode = "n" },
+          { "`", mode = "n" },
+          { "g", mode = { "n", "v" } },
+          { "c", mode = "n" },
+        },
+      }
     end,
   },
 

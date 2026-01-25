@@ -29,13 +29,15 @@ _ensure_services() {
 # Function to find directory and cd or for a file, extract its parent directory with dirname and cd
 # old fzf config: fzf --preview 'bat --color=always {} 2>/dev/null || cat {}'
 # new fzf config requires bat in replacement of cat, install with brew install bat or apt install bat
+# <C-j> to move down and <C-k> to move up
 function lcd() {
   _ensure_services || return 1
 
   local file
-  file=$(es.exe -i "$1" 2>/dev/null | tr -d '\r' | fzf \
+  file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
+    --bind 'ctrl-j:down,ctrl-k:up' \
     --preview 'bat --style=numbers --color=always --line-range :500 {} 2>/dev/null || ls -lah --color=always {} 2>/dev/null || echo "¯\_(ツ)_/¯"' \
-    --preview-window right:50%:border-left)
+    --preview-window right:0%:border-left)
   
   # Convert paths to WSL format
   if [[ "$file" == *'\'* ]]; then
@@ -62,11 +64,13 @@ function lcd() {
 
 # Find file and edit it - does not cd to its directory, we stay in our current directory
 # If we led to a directory and not a file, it will open that directory in nvim which is fine
+# <C-j> to move down and <C-k> to move up
 function led() {
   _ensure_services || return 1
 
   local file
-  file=$(es.exe -i "$1" 2>/dev/null | tr -d '\r' | fzf \
+  file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
+    --bind 'ctrl-j:down,ctrl-k:up' \
     --preview 'bat --style=numbers --color=always --line-range :500 {} 2>/dev/null || ls -lah --color=always {} 2>/dev/null || echo "¯\_(ツ)_/¯"' \
     --preview-window right:50%:border-left)
   
