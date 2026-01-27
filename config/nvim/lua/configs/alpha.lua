@@ -44,8 +44,8 @@ local buttons = {
   { icon = "", key = "f", cmd = ":Telescope find_files<CR>" },
   { icon = "", key = "o", cmd = ":Telescope oldfiles<CR>" },
   { icon = "󰈭", key = "w", cmd = ":Telescope live_grep<CR>" },
-  { icon = "󱥚", key = "s", cmd = "" },
-  { icon = "", key = "'", cmd = "" },
+  { icon = "󱥚", key = "s", cmd = ":Telescope persisted<CR>" },
+  { icon = "", key = "h", cmd = ":lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<CR>" },
 }
 
 -- Config
@@ -220,6 +220,19 @@ vim.api.nvim_create_autocmd({ "VimResized", "WinResized" }, {
         apply_highlights(bufnr)
         update_cursor_highlight(bufnr)
       end, 50) -- slightly longer delay to let alpha re-render
+    end
+  end,
+})
+
+-- reapply button and shortcut highlights whenever we enter an alpha buffer
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.bo[bufnr].filetype == "alpha" then
+      vim.defer_fn(function()
+        apply_highlights(bufnr)
+        update_cursor_highlight(bufnr)
+      end, 10)
     end
   end,
 })

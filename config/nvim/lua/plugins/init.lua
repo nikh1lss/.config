@@ -359,4 +359,98 @@ return {
       require "configs.alpha"
     end,
   },
+
+  -- sessions
+  {
+    "olimorris/persisted.nvim",
+    lazy = false,
+    opts = function()
+      return require "configs.persisted"
+    end,
+    keys = {
+      { "<leader>sl", "<cmd>Telescope persisted<CR>", desc = "List sessions" },
+      { "<leader>ss", "<cmd>SessionSave<CR>", desc = "Save session" },
+      { "<leader>sd", "<cmd>SessionDelete<CR>", desc = "Delete session" },
+      { "<leader>sr", "<cmd>SessionLoad<CR>", desc = "Load session for cwd" },
+    },
+    config = function(_, opts)
+      require("persisted").setup(opts)
+      require("telescope").load_extension "persisted"
+    end,
+  },
+
+  -- harpoon
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = function()
+      return require "configs.harpoon"
+    end,
+    keys = {
+      {
+        "<leader>a",
+        function()
+          require("harpoon"):list():add()
+        end,
+        desc = "Harpoon add file",
+      },
+      {
+        "<leader>h",
+        function()
+          require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+        end,
+        desc = "Harpoon menu",
+      },
+      {
+        "<A-1>",
+        function()
+          require("harpoon"):list():select(1)
+        end,
+        desc = "Harpoon file 1",
+      },
+      {
+        "<A-2>",
+        function()
+          require("harpoon"):list():select(2)
+        end,
+        desc = "Harpoon file 2",
+      },
+      {
+        "<A-3>",
+        function()
+          require("harpoon"):list():select(3)
+        end,
+        desc = "Harpoon file 3",
+      },
+      {
+        "<A-4>",
+        function()
+          require("harpoon"):list():select(4)
+        end,
+        desc = "Harpoon file 4",
+      },
+      {
+        "<A-5>",
+        function()
+          require("harpoon"):list():select(5)
+        end,
+        desc = "Harpoon file 5",
+      },
+      {
+        "<S-A-p>",
+        function()
+          require("harpoon"):list():prev()
+        end,
+        desc = "Harpoon prev",
+      },
+      {
+        "<S-A-n>",
+        function()
+          require("harpoon"):list():next()
+        end,
+        desc = "Harpoon next",
+      },
+    },
+  },
 }

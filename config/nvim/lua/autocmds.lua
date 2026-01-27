@@ -25,3 +25,12 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
     end
   end,
 })
+
+-- newline comment continuation stops with esc + o now
+-- add "r" to completely disable on newlines
+autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove { "o" }
+  end,
+})
