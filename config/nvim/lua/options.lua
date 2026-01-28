@@ -6,7 +6,6 @@ local opt = vim.opt
 local g = vim.g
 
 -------------------------------------- options ------------------------------------------
-
 opt.guicursor = ""
 opt.spell = false
 opt.signcolumn = "yes"

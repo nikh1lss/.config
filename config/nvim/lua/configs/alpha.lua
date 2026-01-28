@@ -1,7 +1,7 @@
 local alpha = require "alpha"
 local dashboard = require "alpha.themes.dashboard"
 
-vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#2B0F3D" }) -- ascii
+vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#836EFF" }) -- ascii
 vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#a6adc8" }) -- buttons
 vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#a6adc8" }) -- shortcuts
 vim.api.nvim_set_hl(0, "AlphaFooter", { fg = "#FF69D8" }) -- footer
