@@ -19,11 +19,13 @@ return {
     "cpp",
     "rust",
     "c_sharp",
-    json,
+    "json",
+    "javadoc",
   },
 
   highlight = {
     enable = true,
+    use_languagetree = true,
   },
 
   indent = { enable = true },

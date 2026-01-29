@@ -41,7 +41,7 @@ local options = {
     -- lazyload it when there are 1+ buffers
     tabufline = {
       enabled = true,
-      lazyload = true,
+      lazyload = false, -- no longer lazyload :)
       order = { "treeOffset", "buffers", "tabs" }, -- removed "btns"
       modules = nil, -- nice!
       bufwidth = 21,
@@ -56,15 +56,8 @@ local options = {
       { txt = "", keys = "f", cmd = "Telescope find_files" },
       { txt = "", keys = "o", cmd = "Telescope oldfiles" },
       { txt = "󰈭", keys = "w", cmd = "Telescope live_grep" },
-      { txt = "󱥚", keys = "s", cmd = "" },
-      { txt = "", keys = "'", cmd = "" },
-      -- { txt = "  Find File", keys = "f", cmd = "Telescope find_files" },
-      -- { txt = "  Recent Files", keys = "o", cmd = "Telescope oldfiles" },
-      -- { txt = "󰈭  Find Word", keys = "w", cmd = "Telescope live_grep" },
-      -- { txt = "󱥚  Themes", keys = "t", cmd = ":lua require('nvchad.themes').open()" },
-      -- { txt = "  Mappings", keys = "m", cmd = "NvCheatsheet" },
-      -- { txt = "󱥚 Last Session", keys = "s", cmd = "" },
-      -- { txt = " Bookmarks", keys = "'", cmd = "" },
+      { txt = "󱥚  Themes", keys = "t", cmd = ":lua require('nvchad.themes').open()" },
+      { txt = "  Mappings", keys = "m", cmd = "NvCheatsheet" },
 
       { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
 

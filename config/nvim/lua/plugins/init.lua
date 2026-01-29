@@ -64,7 +64,7 @@ return {
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
       return {
-        delay = 99999,
+        -- delay = 99999,
         triggers = {
           { "<leader>", mode = { "n", "v" } },
           { "<c-w>", mode = "n" },
@@ -146,7 +146,14 @@ return {
     "mason-org/mason-lspconfig.nvim",
     lazy = false,
     opts = {
-      ensure_installed = { "lua_ls", "pyright", "ts_ls", "jdtls", "clangd", "rust_analyzer" },
+      ensure_installed = {
+        "lua_ls",
+        "pyright",
+        "ts_ls",
+        "jdtls",
+        "clangd",
+        "rust_analyzer",
+      },
       automatic_installation = true,
       automatic_enable = {
         exclude = {
@@ -369,8 +376,27 @@ return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = function()
-      return require "configs.harpoon"
+    config = function()
+      local harpoon = require "harpoon"
+      harpoon:setup(require "configs.harpoon")
+
+      -- save cursor position on buffer leave
+      vim.api.nvim_create_autocmd({ "BufLeave", "ExitPre" }, {
+        pattern = "*",
+        callback = function()
+          local filename = vim.fn.expand "%:p:."
+          local list = harpoon:list()
+
+          for i, item in ipairs(list.items) do
+            if item.value == filename then
+              local cursor = vim.api.nvim_win_get_cursor(0)
+              item.context.row = cursor[1]
+              item.context.col = cursor[2]
+              break
+            end
+          end
+        end,
+      })
     end,
     keys = {
       {
@@ -381,7 +407,7 @@ return {
         desc = "Harpoon add file",
       },
       {
-        "<leader>h",
+        "<leader>;",
         function()
           require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
         end,
@@ -437,5 +463,33 @@ return {
         desc = "Harpoon next",
       },
     },
+  },
+
+  -- configure spring-boot LS
+  {
+    "JavaHello/spring-boot.nvim",
+    ft = { "java", "yaml", "jproperties" },
+    dependencies = {
+      "mfussenegger/nvim-jdtls",
+    },
+    opts = {},
+  },
+
+  -- spring boot workflow helpers
+  {
+    "elmcgill/springboot-nvim",
+    ft = "java",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-jdtls",
+    },
+    config = function()
+      local springboot = require "springboot-nvim"
+      springboot.setup {}
+      vim.keymap.set("n", "<leader>Jr", springboot.boot_run, { desc = "Spring Boot Run" })
+      vim.keymap.set("n", "<leader>Jc", springboot.generate_class, { desc = "Generate Class" })
+      vim.keymap.set("n", "<leader>Ji", springboot.generate_interface, { desc = "Generate Interface" })
+      vim.keymap.set("n", "<leader>Je", springboot.generate_enum, { desc = "Generate Enum" })
+    end,
   },
 }
