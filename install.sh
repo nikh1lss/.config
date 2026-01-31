@@ -36,6 +36,7 @@ install_fonts() {
     fc-cache -fv
     cd -
     echo "MesloLGS NF installed and set"
+    echo "Install MesloLGM Nerd Font instead if not working"
 }
 
 backup_if_exists() {

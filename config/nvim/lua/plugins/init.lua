@@ -64,7 +64,7 @@ return {
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
       return {
-        -- delay = 99999,
+        delay = 99999,
         triggers = {
           { "<leader>", mode = { "n", "v" } },
           { "<c-w>", mode = "n" },
@@ -387,7 +387,7 @@ return {
           local filename = vim.fn.expand "%:p:."
           local list = harpoon:list()
 
-          for i, item in ipairs(list.items) do
+          for _, item in ipairs(list.items) do
             if item.value == filename then
               local cursor = vim.api.nvim_win_get_cursor(0)
               item.context.row = cursor[1]
@@ -475,66 +475,95 @@ return {
     opts = {},
   },
 
-  -- spring boot workflow helpers
-  {
-    "elmcgill/springboot-nvim",
-    ft = "java",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "mfussenegger/nvim-jdtls",
-    },
-    config = function()
-      local springboot = require "springboot-nvim"
-      springboot.setup {}
-      vim.keymap.set("n", "<leader>Jr", springboot.boot_run, { desc = "Spring Boot Run" })
-      vim.keymap.set("n", "<leader>Jc", springboot.generate_class, { desc = "Generate Class" })
-      vim.keymap.set("n", "<leader>Ji", springboot.generate_interface, { desc = "Generate Interface" })
-      vim.keymap.set("n", "<leader>Je", springboot.generate_enum, { desc = "Generate Enum" })
-    end,
-  },
-
   -- oil
   {
     "stevearc/oil.nvim",
     cmd = "Oil",
+    lazy = false,
     keys = {
       { "-", "<cmd>Oil<CR>", desc = "Open parent directory" },
       { "<leader>o", "<cmd>Oil --float<CR>", desc = "Open Oil (float)" },
     },
-    opts = {
-      default_file_explorer = true,
-      columns = {
-        "icon",
-        "permissions",
-        "size",
-        "mtime",
-      },
-      view_options = {
-        show_hidden = true,
-      },
-      float = {
-        padding = 2,
-        max_width = 90,
-        max_height = 30,
-      },
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-v>"] = "actions.select_vsplit",
-        ["<C-x>"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["q"] = "actions.close",
-        ["-"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["gs"] = "actions.change_sort",
-        ["gx"] = "actions.open_external",
-        ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
-      },
-    },
+    config = function()
+      require("oil").setup {
+        default_file_explorer = true,
+        columns = {
+          "type",
+          -- "icon",
+          "permissions",
+          "size",
+          "mtime",
+        },
+        view_options = {
+          show_hidden = true,
+        },
+        float = {
+          padding = 2,
+          max_width = 90,
+          max_height = 30,
+        },
+        keymaps = {
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<C-v>"] = "actions.select_vsplit",
+          ["<C-x>"] = "actions.select_split",
+          ["<C-t>"] = "actions.select_tab",
+          ["<C-p>"] = "actions.preview",
+          ["q"] = "actions.close",
+          ["-"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["`"] = "actions.cd",
+          ["~"] = "actions.tcd",
+          ["gs"] = "actions.change_sort",
+          ["gx"] = "actions.open_external",
+          ["g."] = "actions.toggle_hidden",
+          ["g\\"] = "actions.toggle_trash",
+        },
+      }
+
+      -- the dumbest autocmd i've ever made
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "oil",
+        callback = function()
+          vim.keymap.set("v", "0", "V", { buffer = true })
+          vim.keymap.set("v", "$", "V", { buffer = true })
+        end,
+      })
+    end,
     dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+
+  -- code runner (anything else just use tmux)
+  {
+    "CRAG666/code_runner.nvim",
+    cmd = { "RunCode", "RunFile", "RunProject" },
+    keys = {
+      { "<leader>rc", "<cmd>RunCode<cr>", desc = "Run Code" },
+    },
+    opts = {
+      filetype = {
+        python = "python3 -u",
+        javascript = "node",
+        typescript = "npx ts-node",
+        java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+        c = "cd $dir && gcc $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        rust = "cargo run",
+        go = "go run .",
+        lua = "lua",
+        bash = "bash",
+        sh = "sh",
+      },
+      project = {
+        ["pom.xml"] = "mvn spring-boot:run",
+        ["build.gradle"] = "gradle bootRun",
+        ["package.json"] = "npm start",
+        ["Cargo.toml"] = "cargo run",
+        ["Makefile"] = "make run",
+      },
+      mode = "term",
+      focus = true,
+      startinsert = false,
+    },
   },
 }
