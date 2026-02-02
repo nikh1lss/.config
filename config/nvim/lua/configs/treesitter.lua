@@ -22,21 +22,18 @@ return {
     "json",
     "javadoc",
   },
-
   highlight = {
     enable = true,
     use_languagetree = true,
   },
-
   indent = { enable = true },
-
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<C-space>", -- start selecting current node
-      node_incremental = "<C-space>", -- expand to parent node
-      scope_incremental = false, -- disabled (would expand to scope)
-      node_decremental = "<bs>", -- shrink selection back
+      init_selection = "<C-space>",
+      node_incremental = "<C-space>",
+      scope_incremental = false,
+      node_decremental = "<bs>",
     },
   },
 }
