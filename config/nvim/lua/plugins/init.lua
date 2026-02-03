@@ -681,4 +681,33 @@ return {
       startinsert = false,
     },
   },
+
+  -- tabout
+  {
+    "abecodes/tabout.nvim",
+    event = "InsertEnter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "hrsh7th/nvim-cmp",
+    },
+    opts = {
+      tabkey = "", -- disabled, handled by cmp
+      backwards_tabkey = "", -- disabled, handled by cmp
+      act_as_tab = true,
+      act_as_shift_tab = false,
+      enable_backwards = true,
+      completion = false, -- handled by cmp
+      tabouts = {
+        { open = "'", close = "'" },
+        { open = '"', close = '"' },
+        { open = "`", close = "`" },
+        { open = "(", close = ")" },
+        { open = "[", close = "]" },
+        { open = "{", close = "}" },
+        { open = "<", close = ">" },
+      },
+      ignore_beginning = true,
+      exclude = {},
+    },
+  },
 }
