@@ -59,7 +59,6 @@ return {
 
   {
     "folke/which-key.nvim",
-    cmd = "WhichKey",
     lazy = false,
     opts = function()
       dofile(vim.g.base46_cache .. "whichkey")
@@ -762,6 +761,24 @@ return {
           require("flash").toggle()
         end,
         desc = "Toggle Flash Search",
+      },
+    },
+  },
+
+  -- surround
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    opts = {
+      keymaps = {
+        normal = "gz",
+        normal_cur = "gzz",
+        normal_line = "gZ",
+        normal_cur_line = "gZZ",
+        visual = "gz",
+        delete = "gzd",
+        change = "gzc",
       },
     },
   },
