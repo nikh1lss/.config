@@ -57,31 +57,6 @@ return {
     end,
   },
 
-  {
-    "folke/which-key.nvim",
-    lazy = false,
-    opts = function()
-      dofile(vim.g.base46_cache .. "whichkey")
-      return {
-        delay = 99999,
-        triggers = {
-          { "<leader>", mode = { "n", "v" } },
-          { "<c-w>", mode = "n" },
-          { '"', mode = "n" },
-          { "'", mode = "n" },
-          { "`", mode = "n" },
-          { "g", mode = { "n", "v" } },
-          { "c", mode = "n" },
-
-          -- mappings for nvim-treesitter-textobjects
-          { "a", mode = { "x", "o" } },
-          { "i", mode = { "x", "o" } },
-          { "[", mode = { "n", "x", "o" } },
-          { "]", mode = { "n", "x", "o" } },
-        },
-      }
-    end,
-  },
   -- formatting, need to manually download formatters, mason will not
   -- i.e. :MasonInstall stylua prettierd google-java-format clang-format
   -- or with :Mason
@@ -148,7 +123,8 @@ return {
 
   {
     "mason-org/mason-lspconfig.nvim",
-    lazy = false,
+    -- lazy = false,
+    event = "VeryLazy",
     opts = {
       ensure_installed = {
         "lua_ls",
@@ -215,7 +191,8 @@ return {
   {
     "rshkarin/mason-nvim-lint",
     dependencies = { "mason.nvim", "nvim-lint" },
-    lazy = false, -- annoying
+    -- lazy = false, -- annoying
+    event = "VeryLazy",
     config = function()
       require("mason-nvim-lint").setup {
         ensure_installed = { "eslint_d", "ruff", "checkstyle", "cpplint" },
@@ -258,7 +235,8 @@ return {
   -- need to manually install debuggers through :Mason, ensure_installed not working?
   {
     "jay-babu/mason-nvim-dap.nvim",
-    lazy = false,
+    -- lazy = false,
+    event = "VeryLazy",
     dependencies = { "mason.nvim", "nvim-dap" },
     config = function()
       require("mason-nvim-dap").setup {
@@ -469,7 +447,8 @@ return {
   -- sessions
   {
     "olimorris/persisted.nvim",
-    lazy = false,
+    -- lazy = false,
+    event = "VeryLazy",
     opts = function()
       return require "configs.persisted"
     end,

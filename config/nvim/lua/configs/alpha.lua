@@ -44,7 +44,7 @@ local buttons = {
   { icon = "", key = "f", cmd = ":Telescope find_files<CR>" },
   { icon = "", key = "o", cmd = ":Telescope oldfiles<CR>" },
   { icon = "󰈭", key = "w", cmd = ":Telescope live_grep<CR>" },
-  { icon = "󱥚", key = "s", cmd = ":Telescope persisted<CR>" },
+  { icon = "󱥚", key = "p", cmd = ":Telescope persisted<CR>" },
   { icon = "", key = "h", cmd = ":lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<CR>" },
 }
 
