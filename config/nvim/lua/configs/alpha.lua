@@ -152,12 +152,17 @@ local function move_to_button(bufnr)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
   local line = lines[row]
   local col = line and line:find "%S" or 0
-  vim.api.nvim_win_set_cursor(0, { row, col and col - 1 or 0 })
+  -- Wrap in pcall to catch any edge cases
+  pcall(vim.api.nvim_win_set_cursor, 0, { row, col and col - 1 or 0 })
   update_cursor_highlight(bufnr)
 end
 
 -- Setup keymaps
 local function setup_keymaps(bufnr)
+  -- Check at the start of the function
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return
+  end
   -- j - move down (with wrap)
   vim.keymap.set("n", "j", function()
     if current_btn < #buttons then
@@ -283,5 +288,42 @@ vim.api.nvim_create_autocmd("User", {
     dashboard.section.footer.type = "group"
     dashboard.section.footer.opts = { spacing = 0 }
     pcall(vim.cmd.AlphaRedraw)
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "alpha",
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    current_btn = 1
+
+    vim.defer_fn(function()
+      if not vim.api.nvim_buf_is_valid(bufnr) then
+        return
+      end
+      apply_highlights(bufnr)
+      move_to_button(bufnr)
+      pcall(setup_keymaps, bufnr) -- wrap in pcall to catch any race conditions
+    end, 10)
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "alpha",
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    current_btn = 1
+
+    -- Set keymaps immediately (no delay)
+    setup_keymaps(bufnr)
+
+    -- Highlights can stay deferred since they're visual only
+    vim.defer_fn(function()
+      if not vim.api.nvim_buf_is_valid(bufnr) then
+        return
+      end
+      apply_highlights(bufnr)
+      move_to_button(bufnr)
+    end, 10)
   end,
 })

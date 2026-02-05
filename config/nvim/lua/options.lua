@@ -29,7 +29,7 @@ opt.splitkeep = "screen"
 opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 opt.undofile = true
-opt.timeoutlen = 300 -- better-escape.nvim ?
+opt.timeoutlen = 300
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
