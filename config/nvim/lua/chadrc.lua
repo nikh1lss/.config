@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "oceanic-next",
+    theme = "flexoki",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },

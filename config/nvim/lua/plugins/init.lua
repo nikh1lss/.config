@@ -62,7 +62,7 @@ return {
   -- or with :Mason
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre",
+    event = "VeryLazy",
     opts = {
       format_on_save = {
         timeout_ms = 500,
@@ -302,55 +302,65 @@ return {
     end,
   },
 
+  -- nvim-treesitter (main branch)
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main", -- now main branch :)
+      },
     },
     config = function()
+      -- NVChad base46 theming
       pcall(function()
         dofile(vim.g.base46_cache .. "syntax")
         dofile(vim.g.base46_cache .. "treesitter")
       end)
 
-      -- Treesitter core setup
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = {
-          "lua",
-          "luadoc",
-          "printf",
-          "vim",
-          "vimdoc",
-          "python",
-          "javascript",
-          "typescript",
-          "tsx",
-          "java",
-          "c",
-          "cpp",
-          "rust",
-          "c_sharp",
-          "json",
-          "javadoc",
-        },
-        highlight = { enable = true, use_languagetree = true },
-        indent = { enable = true },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
-      }
+      -- Just use nvim-treesitter defaults
+      require("nvim-treesitter").setup {}
 
-      -- Textobjects setup (we use new API now)
+      -- Install parsers (no-op if already installed)
+      local parsers = {
+        "lua",
+        "luadoc",
+        "printf",
+        "vim",
+        "vimdoc",
+        "python",
+        "javascript",
+        "typescript",
+        "tsx",
+        "java",
+        "c",
+        "cpp",
+        "rust",
+        "c_sharp",
+        "json",
+        "javadoc",
+      }
+      require("nvim-treesitter").install(parsers)
+
+      -- Enable highlighting + indentation for installed parsers
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          -- try to start treesitter highlighting
+          pcall(vim.treesitter.start, args.buf)
+
+          -- enable treesitter-based indentation
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+          -- enable treesitter-based folding
+          vim.wo[0][0].foldmethod = "expr"
+          vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          vim.wo[0][0].foldenable = false -- don't fold on open
+        end,
+      })
+
       require("nvim-treesitter-textobjects").setup {
         select = { lookahead = true },
         move = { set_jumps = true },
@@ -426,6 +436,7 @@ return {
       vim.keymap.set({ "n", "x", "o" }, "[]", "<Nop>")
     end,
   },
+
   {
     "numToStr/Comment.nvim",
     event = "User FilePost",
@@ -753,8 +764,8 @@ return {
       keymaps = {
         normal = "gz",
         normal_cur = "gzz",
-        normal_line = "gZ",
-        normal_cur_line = "gZZ",
+        normal_line = "gzl",
+        normal_cur_line = "gzL",
         visual = "gz",
         delete = "gzd",
         change = "gzc",
