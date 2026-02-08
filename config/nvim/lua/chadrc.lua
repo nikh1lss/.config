@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "flexoki",
+    theme = "chadracula-evondev",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },

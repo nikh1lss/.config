@@ -479,7 +479,10 @@ return {
   {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "mike-jl/harpoonEx", opts = { reload_on_dir_change = true } },
+    },
     config = function()
       local harpoon = require "harpoon"
       harpoon:setup(require "configs.harpoon")
