@@ -34,3 +34,33 @@ autocmd("FileType", {
     vim.opt_local.formatoptions:remove { "o" }
   end,
 })
+
+-- auto-close terminal buffer on exit
+vim.api.nvim_create_autocmd("TermClose", {
+  callback = function()
+    vim.schedule(function()
+      local wins = vim.api.nvim_list_wins()
+      if #wins > 1 then
+        vim.cmd "close!"
+      else
+        -- open alpha if we're left on an empty unamed buffer
+        local name = vim.fn.bufname()
+        local lines = vim.fn.line "$"
+        local first_line = vim.fn.getline(1)
+        if name == "" and lines == 1 and first_line == "" then
+          vim.cmd "bwipeout!"
+          vim.cmd "Alpha"
+        end
+      end
+    end)
+  end,
+})
+
+-- wipe checkhealth buffers when we leave them
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "checkhealth",
+  callback = function(ev)
+    vim.bo[ev.buf].buflisted = false
+    vim.bo[ev.buf].bufhidden = "wipe"
+  end,
+})
