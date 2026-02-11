@@ -5,7 +5,7 @@
 local options = {
 
   base46 = {
-    theme = "chadracula-evondev",
+    theme = "rosepine",
     hl_add = {},
     hl_override = {
       Comment = { italic = true },
@@ -14,7 +14,7 @@ local options = {
     integrations = {},
     changed_themes = {},
     transparency = true,
-    theme_toggle = { "onedark", "one_light" },
+    theme_toggle = { "rosepine", "one_light" },
   },
 
   ui = {
