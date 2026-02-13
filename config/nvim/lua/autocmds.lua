@@ -39,11 +39,13 @@ autocmd("FileType", {
 vim.api.nvim_create_autocmd("TermClose", {
   callback = function()
     vim.schedule(function()
-      local wins = vim.api.nvim_list_wins()
+      local wins = vim.tbl_filter(function(w)
+        return vim.api.nvim_win_get_config(w).relative == ""
+      end, vim.api.nvim_list_wins())
+
       if #wins > 1 then
         vim.cmd "close!"
       else
-        -- open alpha if we're left on an empty unamed buffer
         local name = vim.fn.bufname()
         local lines = vim.fn.line "$"
         local first_line = vim.fn.getline(1)

@@ -775,4 +775,15 @@ return {
       },
     },
   },
+
+  -- config + color structure here:
+  -- https://github.com/sphamba/smear-cursor.nvim/blob/main/lua/smear_cursor/
+  {
+    "sphamba/smear-cursor.nvim",
+    lazy = false,
+    config = function()
+      local smear = require "smear_cursor"
+      smear.setup(require "configs.smear-cursor")
+    end,
+  },
 }
