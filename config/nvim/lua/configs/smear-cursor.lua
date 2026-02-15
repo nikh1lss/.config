@@ -29,6 +29,9 @@ local options = {
   -- Sets animation framerate
   time_interval = 1000 / 180, -- milliseconds (1000 / fps)
   smear_insert_mode = false,
+
+  -- buggy with telescope
+  filetypes_disabled = { "TelescopePrompt" },
 }
 
 return options

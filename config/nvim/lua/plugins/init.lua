@@ -784,6 +784,23 @@ return {
     config = function()
       local smear = require "smear_cursor"
       smear.setup(require "configs.smear-cursor")
+
+      -- autocmds to suppress animation during formatting because of how formatting buffers movesS
+      -- cursor to position (1,1) before restoring it
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = function()
+          smear.enabled = false
+        end,
+      })
+
+      -- defer to next event loop cycle so any queued cursor events from formatting finish first
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        callback = function()
+          vim.defer_fn(function()
+            smear.enabled = true
+          end, 0)
+        end,
+      })
     end,
   },
 }
