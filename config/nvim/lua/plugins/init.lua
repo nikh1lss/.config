@@ -801,6 +801,18 @@ return {
           end, 0)
         end,
       })
+
+      -- don't question
+      vim.api.nvim_create_autocmd("BufEnter", {
+        callback = function()
+          if vim.api.nvim_buf_get_name(0):match "^oil://" then
+            smear.enabled = false
+            vim.defer_fn(function()
+              smear.enabled = true
+            end, 0)
+          end
+        end,
+      })
     end,
   },
 }
