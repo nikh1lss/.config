@@ -2,13 +2,13 @@ local M = {}
 
 function M.setup()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-  local workspace_dir = vim.fn.stdpath "data"
+  local workspace_dir = vim.fn.stdpath("data")
     .. package.config:sub(1, 1)
     .. "jdtls-workspace"
     .. package.config:sub(1, 1)
     .. project_name
 
-  local lombok_path = vim.fn.expand "~/dotfiles/config/nvim/lua/jdtls/lombok.jar"
+  local lombok_path = vim.fn.expand("~/dotfiles/config/nvim/lua/jdtls/lombok.jar")
 
   -- See `:help vim.lsp.start` for an overview of the supported `config` options.
   local config = {

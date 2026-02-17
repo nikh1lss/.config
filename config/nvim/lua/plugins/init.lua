@@ -14,7 +14,7 @@ return {
     "nvchad/ui",
     lazy = false,
     config = function()
-      require "nvchad"
+      require("nvchad")
     end,
   },
 
@@ -26,7 +26,7 @@ return {
     "nvim-tree/nvim-web-devicons",
     opts = function()
       dofile(vim.g.base46_cache .. "devicons")
-      return { override = require "nvchad.icons.devicons" }
+      return { override = require("nvchad.icons.devicons") }
     end,
   },
 
@@ -40,7 +40,7 @@ return {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "blankline")
 
-      local hooks = require "ibl.hooks"
+      local hooks = require("ibl.hooks")
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
 
@@ -53,7 +53,7 @@ return {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = function()
-      return require "configs.nvimtree"
+      return require("configs.nvimtree")
     end,
   },
 
@@ -79,6 +79,22 @@ return {
         rust = { "rustfmt" },
       },
       formatters = {
+        stylua = {
+          prepend_args = {
+            "--column-width",
+            "120",
+            "--line-endings",
+            "Unix",
+            "--indent-type",
+            "Spaces",
+            "--indent-width",
+            "2",
+            "--quote-style",
+            "AutoPreferDouble",
+            "--call-parentheses",
+            "Always",
+          },
+        },
         ["google-java-format"] = {
           prepend_args = { "--aosp" },
         },
@@ -94,7 +110,7 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "User FilePost",
     opts = function()
-      return require "configs.gitsigns"
+      return require("configs.gitsigns")
     end,
   },
 
@@ -109,7 +125,7 @@ return {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = function()
-      return require "configs.mason"
+      return require("configs.mason")
     end,
   },
 
@@ -156,10 +172,10 @@ return {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local lint = require "lint"
+      local lint = require("lint")
 
       require("lint.linters.checkstyle").config_file =
-        vim.fn.expand "~/dotfiles/config/nvim/linters/checkstyle/checkstyle.xml"
+        vim.fn.expand("~/dotfiles/config/nvim/linters/checkstyle/checkstyle.xml")
 
       lint.linters_by_ft = {
         -- add linters here
@@ -194,9 +210,9 @@ return {
     -- lazy = false, -- annoying
     event = "VeryLazy",
     config = function()
-      require("mason-nvim-lint").setup {
+      require("mason-nvim-lint").setup({
         ensure_installed = { "eslint_d", "ruff", "checkstyle", "cpplint" },
-      }
+      })
     end,
   },
 
@@ -208,7 +224,7 @@ return {
       "nvim-neotest/nvim-nio",
     },
     config = function()
-      local dap, dapui = require "dap", require "dapui"
+      local dap, dapui = require("dap"), require("dapui")
 
       dapui.setup()
 
@@ -239,11 +255,11 @@ return {
     event = "VeryLazy",
     dependencies = { "mason.nvim", "nvim-dap" },
     config = function()
-      require("mason-nvim-dap").setup {
+      require("mason-nvim-dap").setup({
         ensure_installed = { "bash" }, -- now works
         automatic_installation = true,
         handlers = {}, -- auto-configures adapters
-      }
+      })
     end,
   },
 
@@ -259,7 +275,7 @@ return {
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           require("luasnip").config.set_config(opts)
-          require "configs.luasnip"
+          require("configs.luasnip")
         end,
       },
 
@@ -274,7 +290,7 @@ return {
           require("nvim-autopairs").setup(opts)
 
           -- setup cmp for autopairs
-          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
           require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
       },
@@ -289,7 +305,7 @@ return {
       },
     },
     config = function()
-      return require "configs.cmp"
+      return require("configs.cmp")
     end,
   },
 
@@ -298,7 +314,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     opts = function()
-      return require "configs.telescope"
+      return require("configs.telescope")
     end,
   },
 
@@ -322,7 +338,7 @@ return {
       end)
 
       -- Just use nvim-treesitter defaults
-      require("nvim-treesitter").setup {}
+      require("nvim-treesitter").setup({})
 
       -- Install parsers (no-op if already installed)
       local parsers = {
@@ -361,10 +377,10 @@ return {
         end,
       })
 
-      require("nvim-treesitter-textobjects").setup {
+      require("nvim-treesitter-textobjects").setup({
         select = { lookahead = true },
         move = { set_jumps = true },
-      }
+      })
 
       -- Select keymaps
       local select = require("nvim-treesitter-textobjects.select").select_textobject
@@ -400,7 +416,7 @@ return {
       end)
 
       -- Move keymaps
-      local move = require "nvim-treesitter-textobjects.move"
+      local move = require("nvim-treesitter-textobjects.move")
       vim.keymap.set({ "n", "x", "o" }, "]f", function()
         move.goto_next_start("@function.outer", "textobjects")
       end)
@@ -421,12 +437,12 @@ return {
       end)
 
       -- Swap keymaps
-      local swap = require "nvim-treesitter-textobjects.swap"
+      local swap = require("nvim-treesitter-textobjects.swap")
       vim.keymap.set("n", "<leader>sn", function()
-        swap.swap_next "@parameter.inner"
+        swap.swap_next("@parameter.inner")
       end)
       vim.keymap.set("n", "<leader>sp", function()
-        swap.swap_previous "@parameter.inner"
+        swap.swap_previous("@parameter.inner")
       end)
 
       -- disable legacy vim motions (accidentally using)
@@ -441,7 +457,7 @@ return {
     "numToStr/Comment.nvim",
     event = "User FilePost",
     opts = function()
-      return require "configs.comment"
+      return require("configs.comment")
     end,
   },
 
@@ -451,7 +467,7 @@ return {
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require "configs.alpha"
+      require("configs.alpha")
     end,
   },
 
@@ -461,7 +477,7 @@ return {
     -- lazy = false,
     event = "VeryLazy",
     opts = function()
-      return require "configs.persisted"
+      return require("configs.persisted")
     end,
     keys = {
       { "<leader>sl", "<cmd>Telescope persisted<CR>", desc = "List sessions" },
@@ -471,7 +487,7 @@ return {
     },
     config = function(_, opts)
       require("persisted").setup(opts)
-      require("telescope").load_extension "persisted"
+      require("telescope").load_extension("persisted")
     end,
   },
 
@@ -484,14 +500,14 @@ return {
       { "mike-jl/harpoonEx", opts = { reload_on_dir_change = true } },
     },
     config = function()
-      local harpoon = require "harpoon"
-      harpoon:setup(require "configs.harpoon")
+      local harpoon = require("harpoon")
+      harpoon:setup(require("configs.harpoon"))
 
       -- save cursor position on buffer leave
       vim.api.nvim_create_autocmd({ "BufLeave", "ExitPre" }, {
         pattern = "*",
         callback = function()
-          local filename = vim.fn.expand "%:p:."
+          local filename = vim.fn.expand("%:p:.")
           local list = harpoon:list()
 
           for _, item in ipairs(list.items) do
@@ -592,7 +608,7 @@ return {
       { "<leader>o", "<cmd>Oil --float<CR>", desc = "Open Oil (float)" },
     },
     config = function()
-      require("oil").setup {
+      require("oil").setup({
         default_file_explorer = true,
         columns = {
           "type",
@@ -626,7 +642,7 @@ return {
           ["g."] = "actions.toggle_hidden",
           ["g\\"] = "actions.toggle_trash",
         },
-      }
+      })
 
       -- the dumbest autocmd i've ever made
       vim.api.nvim_create_autocmd("FileType", {
@@ -782,10 +798,10 @@ return {
     "sphamba/smear-cursor.nvim",
     lazy = false,
     config = function()
-      local smear = require "smear_cursor"
-      smear.setup(require "configs.smear-cursor")
+      local smear = require("smear_cursor")
+      smear.setup(require("configs.smear-cursor"))
 
-      -- autocmds to suppress animation during formatting because of how formatting buffers movesS
+      -- autocmds to suppress animation during formatting because of how formatting buffers moves
       -- cursor to position (1,1) before restoring it
       vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
@@ -805,7 +821,7 @@ return {
       -- don't question
       vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-          if vim.api.nvim_buf_get_name(0):match "^oil://" then
+          if vim.api.nvim_buf_get_name(0):match("^oil://") then
             smear.enabled = false
             vim.defer_fn(function()
               smear.enabled = true

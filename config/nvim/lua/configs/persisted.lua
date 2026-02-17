@@ -2,7 +2,7 @@ local options = {
   autostart = true,
   autoload = false,
   on_autoload_no_session = function()
-    vim.notify "No existing session to load."
+    vim.notify("No existing session to load.")
   end,
   follow_cwd = true,
   use_git_branch = true,

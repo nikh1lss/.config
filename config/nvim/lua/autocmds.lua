@@ -13,7 +13,7 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 
     if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
       vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-      vim.api.nvim_del_augroup_by_name "NvFilePost"
+      vim.api.nvim_del_augroup_by_name("NvFilePost")
 
       vim.schedule(function()
         vim.api.nvim_exec_autocmds("FileType", {})
@@ -31,30 +31,7 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 autocmd("FileType", {
   pattern = "*",
   callback = function()
-    vim.opt_local.formatoptions:remove { "o" }
-  end,
-})
-
--- auto-close terminal buffer on exit
-vim.api.nvim_create_autocmd("TermClose", {
-  callback = function()
-    vim.schedule(function()
-      local wins = vim.tbl_filter(function(w)
-        return vim.api.nvim_win_get_config(w).relative == ""
-      end, vim.api.nvim_list_wins())
-
-      if #wins > 1 then
-        vim.cmd "close!"
-      else
-        local name = vim.fn.bufname()
-        local lines = vim.fn.line "$"
-        local first_line = vim.fn.getline(1)
-        if name == "" and lines == 1 and first_line == "" then
-          vim.cmd "bwipeout!"
-          vim.cmd "Alpha"
-        end
-      end
-    end)
+    vim.opt_local.formatoptions:remove({ "o" })
   end,
 })
 
