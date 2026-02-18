@@ -825,7 +825,7 @@ return {
             smear.enabled = false
             vim.defer_fn(function()
               smear.enabled = true
-            end, 0)
+            end, 10)
           end
         end,
       })
