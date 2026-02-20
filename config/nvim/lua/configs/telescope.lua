@@ -5,10 +5,16 @@ vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#000000", bg = "#FFFFFF"
 vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#000000", bg = "#FFFFFF" })
 vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = "#000000", bg = "#FFFFFF" })
 
+local no_titles = {
+  results_title = false,
+  -- prompt_title = false,
+  preview_title = false,
+}
+
 return {
   defaults = {
     prompt_prefix = " λ ", --[[  ]]
-    selection_caret = " > ",
+    selection_caret = " ∮ ", --[[ > ]]
     entry_prefix = "   ",
     sorting_strategy = "ascending",
     layout_config = {
@@ -25,10 +31,14 @@ return {
   },
 
   pickers = {
-    find_files = {
+    find_files = vim.tbl_extend("force", no_titles, {
       -- hidden = true, -- show dotfiles
       no_ignore = true, -- show gitignore files
-    },
+    }),
+    live_grep = no_titles,
+    oldfiles = no_titles,
+    grep_string = no_titles,
+    buffers = no_titles,
   },
 
   extensions_list = { "themes", "terms" },
