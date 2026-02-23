@@ -779,17 +779,21 @@ return {
     "kylechui/nvim-surround",
     version = "*",
     event = "VeryLazy",
-    opts = {
-      keymaps = {
-        normal = "gz",
-        normal_cur = "gzz",
-        normal_line = "gzl",
-        normal_cur_line = "gzL",
-        visual = "gz",
-        delete = "gzd",
-        change = "gzc",
-      },
-    },
+    init = function()
+      vim.g.nvim_surround_no_normal_mappings = true
+      vim.g.nvim_surround_no_visual_mappings = true
+    end,
+    config = function()
+      require("nvim-surround").setup()
+
+      vim.keymap.set("n", "gz", "<Plug>(nvim-surround-normal)")
+      vim.keymap.set("n", "gzz", "<Plug>(nvim-surround-normal-cur)")
+      vim.keymap.set("n", "gzl", "<Plug>(nvim-surround-normal-line)")
+      vim.keymap.set("n", "gzL", "<Plug>(nvim-surround-normal-cur-line)")
+      vim.keymap.set("x", "gz", "<Plug>(nvim-surround-visual)")
+      vim.keymap.set("n", "gzd", "<Plug>(nvim-surround-delete)")
+      vim.keymap.set("n", "gzc", "<Plug>(nvim-surround-change)")
+    end,
   },
 
   -- config + color structure here:
