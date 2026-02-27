@@ -4,7 +4,7 @@ local opt = vim.opt
 -- local o = vim.o
 local g = vim.g
 
--------------------------------------- options ------------------------------------------
+-- options
 opt.guicursor = ""
 opt.spell = false
 opt.signcolumn = "yes"
@@ -18,6 +18,10 @@ opt.smartcase = true
 opt.cursorline = true
 opt.termguicolors = true
 opt.conceallevel = 0
+
+-- swapfiles
+opt.swapfile = false
+opt.undofile = true
 
 -- Splits
 opt.splitbelow = true

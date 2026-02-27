@@ -114,6 +114,14 @@ source $ZSH/oh-my-zsh.sh
 # vim motions for zsh :)
 bindkey -v
 
+# Paste from Windows clipboard in vi normal mode
+vi-paste-from-clipboard() {
+  local clipboard=$(win32yank.exe -o --lf)
+  LBUFFER+="$clipboard"
+}
+zle -N vi-paste-from-clipboard
+bindkey -M vicmd 'p' vi-paste-from-clipboard
+
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
