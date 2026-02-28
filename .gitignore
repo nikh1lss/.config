@@ -1,6 +1,5 @@
-*.md
 go/
-*.txti
+*.txt
 
 neofetch
 fastfetch
