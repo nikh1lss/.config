@@ -13,7 +13,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = true,
+    transparency = false,
     theme_toggle = { "rosepine", "one_light" },
   },
 
@@ -30,7 +30,7 @@ local options = {
 
     statusline = {
       enabled = true,
-      theme = "default", -- default/vscode/vscode_colored/minimal
+      theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
       separator_style = "default",

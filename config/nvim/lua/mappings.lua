@@ -10,6 +10,7 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 -- visual block mode
 map("n", "<C-q>", "<C-v>", { noremap = true, desc = "visual block mode" })
 
+-- keep navigation in normal mode
 map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
 map("i", "<C-e>", "<End>", { desc = "move end of line" })
 map("i", "<C-h>", "<Left>", { desc = "move left" })
@@ -17,10 +18,11 @@ map("i", "<C-l>", "<Right>", { desc = "move right" })
 map("i", "<C-j>", "<Down>", { desc = "move down" })
 map("i", "<C-k>", "<Up>", { desc = "move up" })
 
-map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
-map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
-map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
-map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
+-- conflics with tmux
+-- map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
+-- map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
+-- map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
+-- map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
@@ -92,27 +94,27 @@ map(
 map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "git toggle blame" })
 map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git full file blame" })
 
--- terminal
-map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
-
--- new terminals
-map("n", "<leader>h", function()
-  require("nvchad.term").new({ pos = "sp" })
-end, { desc = "terminal new horizontal term" })
-
-map("n", "<leader>v", function()
-  require("nvchad.term").new({ pos = "vsp" })
-end, { desc = "terminal new vertical term" })
-
--- toggleable
-map({ "n", "t" }, "<A-v>", function()
-  require("nvchad.term").toggle({ pos = "vsp", id = "vtoggleTerm" })
-end, { desc = "terminal toggleable vertical term" })
-
-map({ "n", "t" }, "<A-h>", function()
-  require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
-end, { desc = "terminal toggleable horizontal term" })
-
-map({ "n", "t" }, "<A-i>", function()
-  require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
-end, { desc = "terminal toggle floating term" })
+-- -- terminal
+-- map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+--
+-- -- new terminals
+-- map("n", "<leader>h", function()
+--   require("nvchad.term").new({ pos = "sp" })
+-- end, { desc = "terminal new horizontal term" })
+--
+-- map("n", "<leader>v", function()
+--   require("nvchad.term").new({ pos = "vsp" })
+-- end, { desc = "terminal new vertical term" })
+--
+-- -- toggleable
+-- map({ "n", "t" }, "<A-v>", function()
+--   require("nvchad.term").toggle({ pos = "vsp", id = "vtoggleTerm" })
+-- end, { desc = "terminal toggleable vertical term" })
+--
+-- map({ "n", "t" }, "<A-h>", function()
+--   require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
+-- end, { desc = "terminal toggleable horizontal term" })
+--
+-- map({ "n", "t" }, "<A-i>", function()
+--   require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
+-- end, { desc = "terminal toggle floating term" })

@@ -843,10 +843,13 @@ return {
     lazy = false,
     config = function()
       require("smart-splits").setup({})
-      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left, { desc = "Navigate left" })
-      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down, { desc = "Navigate down" })
-      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up, { desc = "Navigate up" })
-      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right, { desc = "Navigate right" })
+      -- navigation (also terminal mode in case)
+      vim.keymap.set({ "n", "t" }, "<C-h>", require("smart-splits").move_cursor_left, { desc = "Navigate left" })
+      vim.keymap.set({ "n", "t" }, "<C-j>", require("smart-splits").move_cursor_down, { desc = "Navigate down" })
+      vim.keymap.set({ "n", "t" }, "<C-k>", require("smart-splits").move_cursor_up, { desc = "Navigate up" })
+      vim.keymap.set({ "n", "t" }, "<C-l>", require("smart-splits").move_cursor_right, { desc = "Navigate right" })
+
+      -- resizing
       vim.keymap.set("n", "<A-h>", require("smart-splits").resize_left, { desc = "Resize left" })
       vim.keymap.set("n", "<A-j>", require("smart-splits").resize_down, { desc = "Resize down" })
       vim.keymap.set("n", "<A-k>", require("smart-splits").resize_up, { desc = "Resize up" })
