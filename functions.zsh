@@ -96,9 +96,7 @@ function led() {
 function zpdf() {
   _ensure_services || return 1
   local file
-    file=$(es.exe ext:pdf "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
-    --preview 'pdftotext {} - 2>/dev/null | head -80 || echo "¯\_(ツ)_/¯"' \
-    --preview-window right:50%:border-left)
+  file=$(es.exe ext:pdf "nocase:$1" 2>/dev/null | tr -d '\r' | fzf)
 
   # Convert paths to WSL format
   if [[ "$file" == *'\'* ]]; then

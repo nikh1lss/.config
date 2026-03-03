@@ -13,7 +13,7 @@ local options = {
     },
     integrations = {},
     changed_themes = {},
-    transparency = false,
+    transparency = true,
     theme_toggle = { "rosepine", "one_light" },
   },
 

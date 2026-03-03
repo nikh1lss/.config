@@ -117,10 +117,21 @@ bindkey -v
 # Paste from Windows clipboard in vi normal mode
 vi-paste-from-clipboard() {
   local clipboard=$(win32yank.exe -o --lf)
-  LBUFFER+="$clipboard"
+  CUTBUFFER="$clipboard"
+  zle vi-put-after
 }
 zle -N vi-paste-from-clipboard
 bindkey -M vicmd 'p' vi-paste-from-clipboard
+
+# Also bind in visual mode so selecting + p replaces the selection
+vi-paste-from-clipboard-visual() {
+  local clipboard=$(win32yank.exe -o --lf)
+  zle vi-delete
+  CUTBUFFER="$clipboard"
+  zle vi-put-before
+}
+zle -N vi-paste-from-clipboard-visual
+bindkey -M visual 'p' vi-paste-from-clipboard-visual
 
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
