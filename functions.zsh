@@ -90,3 +90,33 @@ function led() {
     nvim "$file"
   fi
 }
+
+# Find pdf and open with zathura in a new tmux window, 
+# <C-p> to move up and <C-n> to move down
+function zpdf() {
+  _ensure_services || return 1
+  local file
+    file=$(es.exe ext:pdf "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
+    --preview 'pdftotext {} - 2>/dev/null | head -80 || echo "¯\_(ツ)_/¯"' \
+    --preview-window right:50%:border-left)
+
+  # Convert paths to WSL format
+  if [[ "$file" == *'\'* ]]; then
+    file="${file//\\//}"
+
+    if [[ "$file" == //wsl\$/* ]]; then
+      file=$(echo "$file" | sed 's|^//wsl\$/[^/]*/|/|')
+    elif [[ "$file" == ?:/* ]]; then
+      file=$(wslpath "$file")
+    fi
+  fi
+
+  if [[ -n "$file" ]]; then
+    if [[ -n "$TMUX" ]]; then
+      tmux new-window "zathura '${file}'"
+    else
+      zathura "$file" &
+      disown
+    fi
+  fi
+}
