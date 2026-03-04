@@ -1,57 +1,10 @@
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
-local function chafa_header(image_path, width, height)
-  local cmd = string.format("chafa %s --size=%dx%d --symbols=braille --colors=none", image_path, width, height)
-  local output = vim.fn.system(cmd)
-  local lines = {}
-  for line in output:gmatch("[^\r\n]+") do
-    table.insert(lines, line)
-  end
-  return lines
-end
-
-local image = "PATH"
-
-if vim.fn.executable("chafa") == 1 and (vim.fn.filereadable(image) == 1 or image == "PATH") then
-  dashboard.section.header.val = { --[[ chafa_header(image, 100, 100) ]]
-    "                                        ++*=          -.  ..                     ",
-    "                                      :=+###*####=+*+####-                       ",
-    "                   :  ++*=#* .       -#+#####*#############:                     ",
-    "                    ########*===*+#++*###################                        ",
-    "                  .+######################################.                      ",
-    "                  ####@%#################################+:**                    ",
-    "             :*+*###########################%################=+.-                ",
-    "              :*######=#####%@%#################@%#@%############=               ",
-    "               *#####################################@%%##########*=-            ",
-    "           # =########%###%####%##################-.*####%###########*#*  - =    ",
-    "           .#####@##@##############################= .#####################-     ",
-    "          =####%@@%#*##+###-####%##%%#=#############*=#####*.=#############-     ",
-    "           ##%############.  =-:*%@###################*#=+########%#########+    ",
-    "      -=*=-######%@###@%#-:%*-*####@@%#%#%######@@#####+   *#######@@%##*+..     ",
-    "      *#####%%####%####*#*.-.      -####@@#############++=@%%##############.     ",
-    "       =+*#######:###*#####=+**       .  %#@@*#%#########=  -*######%######*     ",
-    "         *##**   -######*#%###*##         =@%@-..+#*:  *#####*####%#@####*.*     ",
-    "        .*#**################%###= ::      @@            ##-   +####**+.         ",
-    "       *##########%######%######-#   %-   .@=             .      :*++            ",
-    "       *############################*+ -@@%#.                                    ",
-    "     =###*##*########################:   :@%                                     ",
-    "      =#######+*#%#####+:-* .         #%# *@.                                    ",
-    "     .=*######+=  +*:*###                -%%*                                    ",
-    "          .   +        =                   @@*                                   ",
-    "                                           *@#                                   ",
-    "                                           #%#                                   ",
-    "                                           %%-                                   ",
-    "                                          *%#                                    ",
-    "                                         *#%:                                    ",
-    "                                        ***+                                     ",
-    "                                       +##+-                                     ",
-    "                             :-=+*#*##%#+%%@@@*::                                ",
-    "                 .:-+++**#%##*%######%#***###%%#++======--=---:.                 ",
-  }
-else
-  dashboard.section.header.val = { "  chafa not found or image missing  " }
-end
+local img = dofile("/home/nikhil/dotfiles/config/nvim/lua/configs/alpha_images/tree.lua")
+dashboard.config.layout[2] = img.header
+dashboard.config.layout[1] = { type = "padding", val = 0 }
+dashboard.config.layout[3] = { type = "padding", val = 0 }
 
 dashboard.section.buttons.val = {
   dashboard.button("f", "λ  > Find file", ":Telescope find_files<CR>"),

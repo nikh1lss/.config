@@ -9,3 +9,6 @@ config/tmux/plugins/
 
 # htop
 htop
+
+# dashboard images
+alpha_images

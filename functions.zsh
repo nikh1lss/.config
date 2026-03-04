@@ -33,11 +33,8 @@ _ensure_services() {
 function lcd() {
   _ensure_services || return 1
 
-  local file
-  file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
-    --preview 'bat --style=numbers --color=always --line-range :500 {} 2>/dev/null || ls -lah --color=always {} 2>/dev/null || echo "¯\_(ツ)_/¯"' \
-    --preview-window right:0%:border-left)
-  
+  local file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' | fzf) 
+ 
   # Convert paths to WSL format
   if [[ "$file" == *'\'* ]]; then
     # Convert backslashes to forward slashes first
@@ -68,23 +65,11 @@ function led() {
   _ensure_services || return 1
 
   local file
-  file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' | fzf \
-    --preview 'bat --style=numbers --color=always --line-range :500 {} 2>/dev/null || ls -lah --color=always {} 2>/dev/null || echo "¯\_(ツ)_/¯"' \
-    --preview-window right:50%:border-left)
-  
-  # Convert paths to WSL format
-  if [[ "$file" == *'\'* ]]; then
-    # Convert backslashes to forward slashes first
-    file="${file//\\//}"
-    
-    if [[ "$file" == //wsl\$/* ]]; then
-      # WSL path: //wsl$/Distro/path → /path
-      file=$(echo "$file" | sed 's|^//wsl\$/[^/]*/|/|')
-    elif [[ "$file" == ?:/* ]]; then
-      # Windows path: C:/path → /mnt/c/path
-      file=$(wslpath "$file")
-    fi
-  fi
+  file=$(es.exe "nocase:$1" 2>/dev/null | tr -d '\r' \
+    | sed 's|\\|/|g; s|^\([A-Za-z]\):|/mnt/\L\1|; s|^//wsl\$/[^/]*/|/|' \
+    | fzf \
+      --preview 'bat --style=numbers --color=always --line-range :500 {} 2>/dev/null || ls -lah --color=always {} 2>/dev/null || echo "¯\_(ツ)_/¯"' \
+      --preview-window right:50%:border-left)
 
   if [[ -n "$file" ]]; then
     nvim "$file"
@@ -95,8 +80,8 @@ function led() {
 # <C-p> to move up and <C-n> to move down
 function zpdf() {
   _ensure_services || return 1
-  local file
-  file=$(es.exe ext:pdf "nocase:$1" 2>/dev/null | tr -d '\r' | fzf)
+
+  local file=$(es.exe ext:pdf "nocase:$1" 2>/dev/null | tr -d '\r' | fzf)
 
   # Convert paths to WSL format
   if [[ "$file" == *'\'* ]]; then
