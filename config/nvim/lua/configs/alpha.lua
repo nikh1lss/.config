@@ -1,10 +1,10 @@
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
-local img = dofile("/home/nikhil/dotfiles/config/nvim/lua/configs/alpha_images/tree.lua")
+local img = dofile("/home/nikhil/dotfiles/config/nvim/lua/configs/alpha_images/eyes.lua")
 dashboard.config.layout[2] = img.header
-dashboard.config.layout[1] = { type = "padding", val = 0 }
-dashboard.config.layout[3] = { type = "padding", val = 0 }
+dashboard.config.layout[1] = { type = "padding", val = 3 } -- top padding
+-- dashboard.config.layout[3] = { type = "padding", val = 3 } -- bottom padding
 
 dashboard.section.buttons.val = {
   dashboard.button("f", "λ  > Find file", ":Telescope find_files<CR>"),

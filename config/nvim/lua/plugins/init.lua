@@ -856,4 +856,76 @@ return {
       vim.keymap.set("n", "<A-l>", require("smart-splits").resize_right, { desc = "Resize right" })
     end,
   },
+
+  -- obsidian
+  -- obsidian
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("obsidian").setup({
+        workspaces = {
+          {
+            name = "Eternal-Garden",
+            path = "/mnt/c/Users/nsing/Vaults/Eternal Garden",
+          },
+        },
+        completion = {
+          nvim_cmp = true,
+          min_chars = 2,
+        },
+        new_notes_location = "current_dir",
+        note_id_func = function(title)
+          if title ~= nil then
+            return title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+          end
+          return tostring(os.time())
+        end,
+        mappings = {
+          ["gf"] = {
+            action = function()
+              return require("obsidian").util.gf_passthrough()
+            end,
+            opts = { noremap = false, expr = true, buffer = true },
+          },
+          ["<leader>ch"] = {
+            action = function()
+              return require("obsidian").util.toggle_checkbox()
+            end,
+            opts = { buffer = true },
+          },
+        },
+        ui = {
+          enable = true,
+          checkboxes = {
+            [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+            ["x"] = { char = "", hl_group = "ObsidianDone" },
+          },
+        },
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function()
+          vim.opt_local.conceallevel = 2
+        end,
+      })
+    end,
+    keys = {
+      { "<leader>on", "<cmd>ObsidianNew<CR>", desc = "New note" },
+      { "<leader>oo", "<cmd>ObsidianSearch<CR>", desc = "Search notes" },
+      { "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", desc = "Quick switch" },
+      { "<leader>ob", "<cmd>ObsidianBacklinks<CR>", desc = "Backlinks" },
+      { "<leader>ot", "<cmd>ObsidianTags<CR>", desc = "Tags" },
+      { "<leader>od", "<cmd>ObsidianToday<CR>", desc = "Today's daily note" },
+      { "<leader>ol", "<cmd>ObsidianLinks<CR>", desc = "Links in note" },
+      { "<leader>op", "<cmd>ObsidianPasteImg<CR>", desc = "Paste image" },
+      { "<leader>or", "<cmd>ObsidianRename<CR>", desc = "Rename note" },
+    },
+  },
 }

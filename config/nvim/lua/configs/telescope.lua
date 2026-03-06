@@ -26,7 +26,7 @@ return {
       height = 0.80,
     },
     mappings = {
-      n = { ["q"] = require("telescope.actions").close },
+      n = { ["q"] = require("telescope.actions").close, ["o"] = function() end, ["O"] = function() end },
     },
   },
 

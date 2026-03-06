@@ -92,15 +92,16 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Disable cmp auto-trigger in lua files (lua_ls is annoyingly slow, specifically with newlines)
 -- manually enable cmp in lua files with <C-Space>
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "lua",
-  callback = function()
-    require("cmp").setup.buffer({
-      completion = {
-        autocomplete = false,
-      },
-    })
-  end,
-})
+-- lets hear those fans spin
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "lua",
+--   callback = function()
+--     require("cmp").setup.buffer({
+--       completion = {
+--         autocomplete = false,
+--       },
+--     })
+--   end,
+-- })
 
 return M
