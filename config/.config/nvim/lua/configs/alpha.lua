@@ -1,7 +1,7 @@
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
-local img = dofile("/home/nikhil/dotfiles/config/nvim/lua/configs/alpha_images/eyes.lua")
+local img = dofile("/home/nikhil/dotfiles/config/.config/nvim/lua/configs/alpha_images/ekko.lua")
 dashboard.config.layout[2] = img.header
 dashboard.config.layout[1] = { type = "padding", val = 3 } -- top padding
 -- dashboard.config.layout[3] = { type = "padding", val = 3 } -- bottom padding

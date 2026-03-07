@@ -5,7 +5,8 @@ neofetch
 fastfetch
 
 #TPM
-config/tmux/plugins/
+**/tmux/plugins/
+
 
 # htop
 htop

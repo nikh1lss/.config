@@ -23,7 +23,7 @@ install_go() {
 }
 
 install_fonts() {
-    local font_dir = "$HOME/.local/share/fonts"
+    local font_dir="$HOME/.local/share/fonts"
     mkdir -p "$font_dir"
     cd "$font_dir"
     local base_url="https://github.com/romkatv/powerlevel10k-media/raw/master"
@@ -39,12 +39,10 @@ install_fonts() {
     echo "Install MesloLGM Nerd Font instead if not working"
 }
 
-backup_if_exists() {
-    if [ -e "$1" ] && [ ! -L "$1" ]; then
-        echo "Backing up existing $1 to $1.backup"
-        mv "$1" "$1.backup"
-    fi
-}
+# Install stow if not present
+if ! command -v stow &>/dev/null; then
+    sudo apt install -y stow
+fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "Installing Oh-My-Zsh"
@@ -56,32 +54,21 @@ if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 
-backup_if_exists "$HOME/.config"
-ln -sf "$DOTFILES_DIR/config" "$HOME/.config"
+# Remove existing files/symlinks that would conflict with stow
+for f in ~/.zshrc ~/.p10k.zsh ~/.gitconfig ~/.bashrc ~/.profile ~/.config \
+         ~/.oh-my-zsh/custom/aliases.zsh ~/.oh-my-zsh/custom/functions.zsh \
+         ~/.oh-my-zsh/custom/macros.zsh; do
+    if [ -L "$f" ]; then
+        rm "$f"
+    elif [ -e "$f" ]; then
+        echo "Backing up $f to $f.backup"
+        mv "$f" "$f.backup"
+    fi
+done
 
-backup_if_exists "$HOME/.zshrc"
-ln -sf "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
-
-backup_if_exists "$HOME/.gitconfig"
-ln -sf "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
-
-backup_if_exists "$HOME/.bashrc"
-ln -sf "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
-
-backup_if_exists "$HOME/.p10k.zsh"
-ln -sf "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
-
-backup_if_exists "$HOME/.profile"
-ln -sf "$DOTFILES_DIR/profile" "$HOME/.profile"
-
-backup_if_exists "$HOME/.oh-my-zsh/custom/aliases.zsh"
-ln -sf "$DOTFILES_DIR/aliases.zsh" "$HOME/.oh-my-zsh/custom/aliases.zsh"
-
-backup_if_exists "$HOME/.oh-my-zsh/custom/functions.zsh"
-ln -sf "$DOTFILES_DIR/functions.zsh" "$HOME/.oh-my-zsh/custom/functions.zsh"
-
-backup_if_exists "$HOME/.oh-my-zsh/custom/macros.zsh"
-ln -sf "$DOTFILES_DIR/macros.zsh" "$HOME/.oh-my-zsh/custom/macros.zsh"
+# Stow all packages
+cd "$DOTFILES_DIR"
+stow zsh git bash config shell
 
 if [ ! -f "$HOME/.gitconfig.local" ]; then
     cat >"$HOME/.gitconfig.local" <<'EOF'
@@ -98,7 +85,6 @@ install_go
 # font install for powerlevel10k
 install_fonts
 
-# can always change this here and community.lua if
 # language is not desired (i.e. prolog)
 sudo apt update
 sudo apt install -y \
@@ -112,8 +98,8 @@ sudo apt install -y \
     shellcheck \
     postgresql-client \
     swi-prolog \
-    fzf \ 
-plocate
+    fzf \
+    plocate
 
 # Update locate database
 echo "Updating locate database, this may take a while"

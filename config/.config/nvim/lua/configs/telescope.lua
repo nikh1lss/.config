@@ -32,8 +32,8 @@ return {
 
   pickers = {
     find_files = vim.tbl_extend("force", no_titles, {
-      -- hidden = true, -- show dotfiles
-      no_ignore = true, -- show gitignore files
+      hidden = true, -- show dotfiles
+      find_command = { "fdfind", "--type", "f", "--hidden", "--no-ignore-vcs", "--strip-cwd-prefix" },
     }),
     live_grep = no_titles,
     oldfiles = no_titles,

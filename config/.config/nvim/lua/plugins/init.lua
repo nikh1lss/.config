@@ -858,7 +858,6 @@ return {
   },
 
   -- obsidian
-  -- obsidian
   {
     "epwalsh/obsidian.nvim",
     version = "*",
