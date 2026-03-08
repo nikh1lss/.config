@@ -14,4 +14,3 @@ stow -d ~/dotfiles zsh git bash config shell
 ```
 
 Each top-level directory is a stow package that mirrors the target path structure in `$HOME`. To add a new config, just place it in the correct relative path inside a package and run `stow -d ~/dotfiles <package>`.
-

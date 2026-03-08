@@ -174,8 +174,7 @@ return {
     config = function()
       local lint = require("lint")
 
-      require("lint.linters.checkstyle").config_file =
-        vim.fn.expand("~/dotfiles/config/nvim/linters/checkstyle/checkstyle.xml")
+      require("lint.linters.checkstyle").config_file = vim.fn.stdpath("config") .. "/linters/checkstyle/checkstyle.xml"
 
       lint.linters_by_ft = {
         -- add linters here

@@ -8,7 +8,7 @@ function M.setup()
     .. package.config:sub(1, 1)
     .. project_name
 
-  local lombok_path = vim.fn.expand("~/dotfiles/config/nvim/lua/jdtls/lombok.jar")
+  local lombok_path = vim.fn.stdpath("config") .. "/lua/jdtls/lombok.jar"
 
   -- See `:help vim.lsp.start` for an overview of the supported `config` options.
   local config = {
