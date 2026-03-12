@@ -26,7 +26,7 @@ local options = {
       format_colors = { lsp = true, icon = "󱓻" },
     },
 
-    telescope = { style = "borderless" }, -- borderless / bordered
+    telescope = { style = "bordered" }, -- borderless / bordered
 
     statusline = {
       enabled = true,
@@ -40,39 +40,12 @@ local options = {
 
     -- lazyload it when there are 1+ buffers
     tabufline = {
-      enabled = true,
+      -- :)
+      enabled = false,
       lazyload = false, -- no longer lazyload :)
       order = { "treeOffset", "buffers", "tabs" }, -- removed "btns"
       modules = nil, -- nice!
       bufwidth = 21,
-    },
-  },
-
-  nvdash = {
-    load_on_startup = false,
-    header = {},
-
-    buttons = {
-      { txt = "", keys = "f", cmd = "Telescope find_files" },
-      { txt = "", keys = "o", cmd = "Telescope oldfiles" },
-      { txt = "󰈭", keys = "w", cmd = "Telescope live_grep" },
-      { txt = "󱥚  Themes", keys = "t", cmd = ":lua require('nvchad.themes').open()" },
-      { txt = "  Mappings", keys = "m", cmd = "NvCheatsheet" },
-
-      { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
-
-      {
-        txt = function()
-          local stats = require("lazy").stats()
-          local ms = math.floor(stats.startuptime) .. " ms"
-          return "  Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
-        end,
-        hl = "NvDashFooter",
-        no_gap = true,
-        content = "fit",
-      },
-
-      { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     },
   },
 

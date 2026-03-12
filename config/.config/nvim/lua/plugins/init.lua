@@ -611,7 +611,7 @@ return {
         default_file_explorer = true,
         columns = {
           "type",
-          -- "icon",
+          "icon",
           "permissions",
           "size",
           "mtime",
@@ -642,6 +642,35 @@ return {
           ["g\\"] = "actions.toggle_trash",
         },
       })
+
+      -- Patch recursive_delete to use rm -rf for directories.
+      -- this is a workaround for an open issue https://github.com/stevearc/oil.nvim/issues/719
+      -- Avoids a libuv double-free on certain directories that crashes nvim via oil.
+      -- this bypasses Oil's trash integration for directories, so g\ toggle_trash
+      -- will only apply to file deletes — directories always get permanently removed.
+      local oil_fs = require("oil.fs")
+      local original_recursive_delete = oil_fs.recursive_delete
+
+      oil_fs.recursive_delete = function(entry_type, path, cb)
+        if entry_type == "directory" then
+          vim.fn.jobstart({ "rm", "-rf", path }, {
+            on_exit = function(_, code)
+              if code == 0 then
+                cb(nil)
+              else
+                cb("rm -rf failed on " .. path)
+              end
+            end,
+          })
+        else
+          original_recursive_delete(entry_type, path, cb)
+        end
+      end
+
+      -- On :w, oil runs try_write_changes() which parses diffs, builds actions,
+      -- shows a confirmation dialog, then calls process_actions(). process_actions
+      -- arms a progress popup after 100ms — if the action (e.g. delete) takes longer than that
+      -- (e.g. large directories like node_modules), the loading popup will briefly show.
 
       -- the dumbest autocmd i've ever made
       vim.api.nvim_create_autocmd("FileType", {
