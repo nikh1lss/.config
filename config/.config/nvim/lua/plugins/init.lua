@@ -955,4 +955,37 @@ return {
       { "<leader>or", "<cmd>ObsidianRename<CR>", desc = "Rename note" },
     },
   },
+
+  -- git interface (magit-like)
+  {
+    "NeogitOrg/neogit",
+    cmd = "Neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<CR>", desc = "Neogit status" },
+      { "<leader>gc", "<cmd>Neogit commit<CR>", desc = "Neogit commit" },
+      { "<leader>gp", "<cmd>Neogit push<CR>", desc = "Neogit push" },
+      { "<leader>gl", "<cmd>Neogit pull<CR>", desc = "Neogit pull" },
+      { "<leader>gb", "<cmd>Neogit branch<CR>", desc = "Neogit branch" },
+      { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
+      { "<leader>gD", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+      { "<leader>gf", "<cmd>DiffviewFileHistory %<CR>", desc = "File history" },
+    },
+    opts = {
+      integrations = {
+        telescope = true,
+        diffview = true,
+      },
+      signs = {
+        hunk = { "", "" },
+        item = { "", "" },
+        section = { "", "" },
+      },
+      graph_style = "unicode",
+    },
+  },
 }
