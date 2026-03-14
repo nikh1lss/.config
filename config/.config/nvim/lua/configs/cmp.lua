@@ -2,6 +2,16 @@ local cmp = require("cmp")
 cmp.setup({
   preselect = cmp.PreselectMode.None,
   completion = { completeopt = "menu,menuone,noselect" },
+  window = {
+    completion = {
+      border = "rounded",
+      winhighlight = "Normal:CmpPmenu,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
+    },
+    documentation = {
+      border = "rounded",
+      winhighlight = "Normal:CmpPmenu,FloatBorder:CmpBorder",
+    },
+  },
   experimental = {
     ghost_text = { hl_group = "Comment" },
   },

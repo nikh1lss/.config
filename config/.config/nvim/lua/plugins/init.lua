@@ -23,6 +23,8 @@ return {
         highlight_groups = {
           Comment = { italic = true },
           ["@comment"] = { italic = true },
+          CmpBorder = { fg = "muted", bg = "none" },
+          CmpPmenu = { bg = "none" },
         },
       })
       vim.cmd("colorscheme rose-pine")
