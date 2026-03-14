@@ -1,4 +1,3 @@
-dofile(vim.g.base46_cache .. "cmp")
 local cmp = require("cmp")
 cmp.setup({
   preselect = cmp.PreselectMode.None,
@@ -52,7 +51,4 @@ cmp.setup({
     { name = "nvim_lua" },
     { name = "async_path" },
   },
-  -- merge nvchad's formatting/window stuff
-  formatting = require("nvchad.cmp").formatting,
-  window = require("nvchad.cmp").window,
 })

@@ -7,7 +7,7 @@ alias .....="cd ../../../.."
 # General Shortcuts
 alias g=git
 alias gs="git status"
-alias n="nvim"
+alias n="nvim ."
 alias c="clear"
 alias total="git log --oneline | wc -l"
 

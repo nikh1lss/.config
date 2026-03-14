@@ -4,47 +4,20 @@ return {
   "nvim-lua/plenary.nvim",
 
   {
-    "nvchad/base46",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
-  },
-
-  {
-    "nvchad/ui",
-    lazy = false,
-    config = function()
-      require("nvchad")
-    end,
-  },
-
-  "nvzone/volt",
-  "nvzone/menu",
-  { "nvzone/minty", cmd = { "Huefy", "Shades" } },
-
-  {
     "nvim-tree/nvim-web-devicons",
-    opts = function()
-      dofile(vim.g.base46_cache .. "devicons")
-      return { override = require("nvchad.icons.devicons") }
-    end,
   },
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
-      indent = { char = "│", highlight = "IblChar" },
-      scope = { char = "│", highlight = "IblScopeChar" },
+      indent = { char = "│", highlight = "IblIndent" },
+      scope = { char = "│", highlight = "IblScope" },
     },
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "blankline")
-
       local hooks = require("ibl.hooks")
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
-
-      dofile(vim.g.base46_cache .. "blankline")
     end,
   },
 
@@ -108,7 +81,7 @@ return {
   -- git stuff
   {
     "lewis6991/gitsigns.nvim",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     opts = function()
       return require("configs.gitsigns")
     end,
@@ -131,7 +104,7 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("configs.lspconfig").defaults()
     end,
@@ -330,12 +303,6 @@ return {
       },
     },
     config = function()
-      -- NVChad base46 theming
-      pcall(function()
-        dofile(vim.g.base46_cache .. "syntax")
-        dofile(vim.g.base46_cache .. "treesitter")
-      end)
-
       -- Just use nvim-treesitter defaults
       require("nvim-treesitter").setup({})
 
@@ -454,7 +421,7 @@ return {
 
   {
     "numToStr/Comment.nvim",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     opts = function()
       return require("configs.comment")
     end,
