@@ -3,8 +3,95 @@
 return {
   "nvim-lua/plenary.nvim",
 
+  -- colourscheme
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("rose-pine").setup({
+        variant = "auto",
+        dark_variant = "main",
+        dim_inactive_windows = false,
+        extend_background_behind_borders = true,
+        styles = {
+          bold = true,
+          italic = false,
+          transparency = true,
+        },
+        highlight_groups = {
+          Comment = { italic = true },
+          ["@comment"] = { italic = true },
+        },
+      })
+      vim.cmd("colorscheme rose-pine")
+    end,
+  },
+
+  -- statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        theme = "auto",
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+        globalstatus = true,
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_c = { { "filename", path = 1 } },
+        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_y = { "progress" },
+        lualine_z = { "location" },
+      },
+    },
+  },
+
+  -- LSP signature help (show function params as you type)
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "LspAttach",
+    opts = {
+      bind = true,
+      hint_enable = false, -- disable virtual text hints, just use the floating window
+      handler_opts = {
+        border = "rounded",
+      },
+      floating_window = true,
+      floating_window_above_cur_line = true,
+      max_width = 80,
+    },
+  },
+
+  -- colorizer
+  {
+    "catgoose/nvim-colorizer.lua",
+    event = "BufReadPre",
+    opts = {},
+  },
+
+  -- LSP progress indicator
+  {
+    "j-hui/fidget.nvim",
+    event = "LspAttach",
+    enabled = false,
+    opts = {
+      notification = {
+        window = {
+          winblend = 0, -- works with transparency
+        },
+      },
+    },
+  },
+
   {
     "nvim-tree/nvim-web-devicons",
+    opts = {},
   },
 
   {
@@ -796,7 +883,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = false,
+    enabled = true,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))

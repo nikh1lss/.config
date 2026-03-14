@@ -1,4 +1,5 @@
 vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#df6a8b" })
+vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { fg = "#df6a8b" })
 vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#000000", bg = "#FFFFFF" })
 vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#000000", bg = "#FFFFFF" })
 vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = "#000000", bg = "#FFFFFF" })
