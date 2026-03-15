@@ -44,6 +44,18 @@ M.defaults = function()
     end,
   })
 
+  vim.diagnostic.config({
+    underline = true,
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true, --[[ can be noisy ]]
+  })
+
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = true, fg = "#db4b4b" })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, fg = "#e0af68" })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, fg = "#0db9d7" })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, fg = "#1abc9c" })
+
   local lua_lsp_settings = {
     Lua = {
       runtime = { version = "LuaJIT" },

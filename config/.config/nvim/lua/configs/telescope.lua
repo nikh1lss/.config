@@ -1,3 +1,4 @@
+-- vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#45475a", bold = true })
 vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#df6a8b" })
 vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { fg = "#df6a8b" })
 vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#000000", bg = "#FFFFFF" })
@@ -15,7 +16,7 @@ return {
     prompt_prefix = " λ ", --[[   ]]
     selection_caret = " > ", --[[ >, ➮ ]]
     entry_prefix = "   ",
-    sorting_strategy = "ascending",
+    sorting_strategy = "descending",
     layout_config = {
       horizontal = {
         prompt_position = "bottom",

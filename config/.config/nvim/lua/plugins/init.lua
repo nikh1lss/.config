@@ -38,16 +38,20 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        theme = "auto",
+        theme = "rose-pine",
         component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         globalstatus = true,
       },
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
         lualine_c = { { "filename", path = 1 } },
-        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_x = {
+          "encoding",
+          { "fileformat", symbols = { unix = "UNIX", dos = "DOS", mac = "MAC" } },
+          "filetype",
+        },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },
@@ -101,7 +105,12 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       indent = { char = "│", highlight = "IblIndent" },
-      scope = { char = "│", highlight = "IblScope" },
+      scope = {
+        char = "│",
+        highlight = "IblScope",
+        show_start = false,
+        show_end = false,
+      },
     },
     config = function(_, opts)
       local hooks = require("ibl.hooks")
