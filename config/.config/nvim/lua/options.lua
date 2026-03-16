@@ -11,6 +11,7 @@ opt.signcolumn = "yes"
 opt.wrap = false
 opt.showmode = false -- conflicts with native statusline mode indicator, causing flickering
 opt.scrolloff = 8
+opt.signcolumn = "yes"
 opt.sidescrolloff = 8
 opt.colorcolumn = "100"
 opt.ignorecase = true
@@ -21,6 +22,8 @@ opt.conceallevel = 0
 
 -- swapfiles
 opt.swapfile = false
+opt.backup = false
+opt.undodir = os.getenv("HOME") .. "/.local/state/nvim/undo"
 opt.undofile = true
 
 -- Splits
@@ -39,8 +42,7 @@ opt.timeoutlen = 300
 opt.whichwrap:append("<>[]hl")
 
 -- Performance
--- interval for writing swap file to disk, also used by gitsigns
-opt.updatetime = 250
+opt.updatetime = 50
 
 -- Disable providers
 -- disable some default providers
@@ -52,6 +54,8 @@ g.loaded_ruby_provider = 0
 -- Search
 opt.ignorecase = true
 opt.smartcase = true
+opt.hlsearch = false
+opt.incsearch = true
 
 -- Line Numbers
 opt.number = true
@@ -82,8 +86,6 @@ opt.ruler = false
 
 -- disable nvim intro
 opt.shortmess:append("sI")
-
-opt.signcolumn = "yes"
 
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.fn.has("win32") ~= 0

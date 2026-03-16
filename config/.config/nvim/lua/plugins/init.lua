@@ -58,20 +58,25 @@ return {
     },
   },
 
-  -- LSP signature help (show function params as you type)
+  -- LSP signature
   {
     "ray-x/lsp_signature.nvim",
     event = "LspAttach",
     opts = {
       bind = true,
-      hint_enable = false, -- disable virtual text hints, just use the floating window
+      hint_enable = false,
+      floating_window = false,
       handler_opts = {
         border = "rounded",
       },
-      floating_window = true,
-      floating_window_above_cur_line = true,
       max_width = 80,
     },
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
+      vim.keymap.set({ "n" }, "<leader>ls", function()
+        require("lsp_signature").toggle_float_win()
+      end, { desc = "Toggle signature help" })
+    end,
   },
 
   -- colorizer
@@ -894,7 +899,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = true,
+    enabled = false,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))
