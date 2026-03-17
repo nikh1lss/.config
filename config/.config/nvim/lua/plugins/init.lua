@@ -6,6 +6,7 @@ return {
   -- colourscheme
   {
     "rose-pine/neovim",
+    enabled = false,
     name = "rose-pine",
     lazy = false,
     priority = 1000,
@@ -31,6 +32,23 @@ return {
     end,
   },
 
+  {
+    "ellisonleao/gruvbox.nvim",
+    enabled = true,
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent_mode = true,
+      overrides = {
+        CursorLineNr = { fg = "#fabd2f", bg = "", bold = true },
+        LineNr = { bg = "" },
+      },
+    },
+    config = function(_, opts)
+      require("gruvbox").setup(opts)
+      vim.cmd.colorscheme("gruvbox")
+    end,
+  },
   -- statusline
   {
     "nvim-lualine/lualine.nvim",
@@ -38,7 +56,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        theme = "rose-pine",
+        theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         globalstatus = true,
@@ -754,38 +772,27 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
-  -- code runner (anything else just use tmux)
+  -- compile-mode (emacs-cope)
   {
-    "CRAG666/code_runner.nvim",
-    cmd = { "RunCode", "RunFile", "RunProject" },
+    "ej-shafran/compile-mode.nvim",
+    version = "^5.0.0",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    cmd = { "Compile", "Recompile", "NextError", "PrevError" },
     keys = {
-      { "<leader>rc", "<cmd>RunCode<cr>", desc = "Run Code" },
+      { "<leader>rc", "<cmd>Compile<cr>", desc = "Compile" },
+      { "<leader>rr", "<cmd>Recompile<cr>", desc = "Recompile" },
+      { "<leader>rn", "<cmd>NextError<cr>", desc = "Next error" },
+      { "<leader>rp", "<cmd>PrevError<cr>", desc = "Prev error" },
     },
-    opts = {
-      filetype = {
-        python = "python3 -u",
-        javascript = "node",
-        typescript = "npx ts-node",
-        java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
-        c = "cd $dir && gcc $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
-        cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
-        rust = "cargo run",
-        go = "go run .",
-        lua = "lua",
-        bash = "bash",
-        sh = "sh",
-      },
-      project = {
-        ["pom.xml"] = "mvn spring-boot:run",
-        ["build.gradle"] = "gradle bootRun",
-        ["package.json"] = "npm start",
-        ["Cargo.toml"] = "cargo run",
-        ["Makefile"] = "make run",
-      },
-      mode = "term",
-      focus = true,
-      startinsert = false,
-    },
+    config = function()
+      vim.g.compile_mode = {
+        default_command = "",
+        bang_expansion = true,
+        input_word_completion = true,
+      }
+    end,
   },
 
   -- tabout
