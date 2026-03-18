@@ -376,10 +376,10 @@
 
    if (( $1 )); then
       local       meta='%f'          # default foreground
-      local      clean='%F{#9ccfd8}' # foam
+      local      clean='%F{#e6929f}' # rose
       local   modified='%F{#f6c177}' # gold
       local  untracked='%F{#c4a7e7}' # iris
-      local conflicted='%F{#eb6f92}' # love
+      local conflicted='%F{196}'
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground

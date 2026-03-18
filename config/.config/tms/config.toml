@@ -1,6 +1,6 @@
 [[search_dirs]]
 path = "/home/nikhil"
-depth = 10
+depth = 3
 
 [picker_colors]
 highlight_color = "#26233A"
