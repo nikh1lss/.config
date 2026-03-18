@@ -1,0 +1,10 @@
+[[search_dirs]]
+path = "/home/nikhil"
+depth = 10
+
+[picker_colors]
+highlight_color = "#26233A"
+highlight_text_color = "#E0DEF4"
+border_color = "#6E6A86"
+info_color = "#908CAA"
+prompt_color = "#C4A7E7"

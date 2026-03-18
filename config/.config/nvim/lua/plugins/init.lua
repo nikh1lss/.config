@@ -108,7 +108,7 @@ return {
   {
     "j-hui/fidget.nvim",
     event = "LspAttach",
-    enabled = false,
+    enabled = true,
     opts = {
       notification = {
         window = {
