@@ -99,7 +99,9 @@ sudo apt install -y \
     postgresql-client \
     swi-prolog \
     fzf \
-    plocate
+    plocate \
+    fd-find \
+    cppcheck
 
 # Update locate database
 echo "Updating locate database, this may take a while"

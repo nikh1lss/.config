@@ -276,8 +276,8 @@ return {
         typescript = { "eslint_d" },
         python = { "ruff" },
         java = { "checkstyle" },
-        c = { "cpplint" },
-        cpp = { "cpplint" },
+        c = { "cppcheck" },
+        cpp = { "cppcheck" },
       }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -304,7 +304,8 @@ return {
     event = "VeryLazy",
     config = function()
       require("mason-nvim-lint").setup({
-        ensure_installed = { "eslint_d", "ruff", "checkstyle", "cpplint" },
+        ensure_installed = { "eslint_d", "ruff", "checkstyle" },
+        ignore_install = { "cppcheck" },
       })
     end,
   },
