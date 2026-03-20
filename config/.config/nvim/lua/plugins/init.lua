@@ -34,7 +34,7 @@ return {
 
   {
     "ellisonleao/gruvbox.nvim",
-    enabled = true,
+    enabled = false,
     lazy = false,
     priority = 1000,
     opts = {
@@ -47,6 +47,63 @@ return {
     config = function(_, opts)
       require("gruvbox").setup(opts)
       vim.cmd.colorscheme("gruvbox")
+    end,
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    enabled = true,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("kanagawa").setup({
+        compile = false,
+        undercurl = true,
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = false },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = true,
+        dimInactive = false,
+        terminalColors = true,
+        theme = "dragon", --[[ wave, dragon, lotus ]]
+        background = {
+          dark = "wave",
+          light = "lotus",
+        },
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = "none",
+              },
+            },
+          },
+        },
+        overrides = function(colors)
+          local theme = colors.theme
+          return {
+            -- transparent floats
+            NormalFloat = { bg = "none" },
+            FloatBorder = { bg = "none" },
+            FloatTitle = { bg = "none" },
+
+            CmpBorder = { fg = theme.ui.shade0, bg = "none" },
+            CmpPmenu = { bg = "none" },
+
+            NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+            LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+            MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+
+            TelescopeBorder = { bg = "none" },
+            TelescopePromptBorder = { bg = "none" },
+            TelescopeResultsBorder = { bg = "none" },
+            TelescopePreviewBorder = { bg = "none" },
+          }
+        end,
+      })
+      vim.cmd("colorscheme kanagawa")
     end,
   },
 
