@@ -2,6 +2,10 @@
 path = "/home/nikhil"
 depth = 3
 
+[[search_dirs]]
+path = "/mnt/c/Users/nsing/Vaults/Eternal Garden"
+depth = 0
+
 [picker_colors]
 highlight_color = "#26233A"
 highlight_text_color = "#E0DEF4"

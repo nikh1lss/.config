@@ -4,3 +4,11 @@
 
 [include]
     path = ~/.gitconfig.local
+[gpg]
+	format = ssh
+[user]
+	signingkey = /home/nikhil/.ssh/id_ed25519
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /home/nikhil/.ssh/allowed_signers

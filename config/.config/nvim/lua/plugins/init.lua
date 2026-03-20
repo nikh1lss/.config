@@ -49,6 +49,7 @@ return {
       vim.cmd.colorscheme("gruvbox")
     end,
   },
+
   -- statusline
   {
     "nvim-lualine/lualine.nvim",
@@ -289,10 +290,35 @@ return {
         end,
       })
 
-      -- keymapping to toggle linter
+      -- Trigger linter manually
       vim.keymap.set("n", "<leader>ll", function()
         lint.try_lint()
       end, { desc = "Trigger linting for current file" })
+
+      local original_linters = vim.deepcopy(lint.linters_by_ft)
+
+      -- Toggle linting for current filetype
+      vim.keymap.set("n", "<leader>lt", function()
+        local ft = vim.bo.filetype
+        if lint.linters_by_ft[ft] and #lint.linters_by_ft[ft] > 0 then
+          local linter_names = lint.linters_by_ft[ft]
+          lint.linters_by_ft[ft] = {}
+          -- Reset diagnostics for each linter's namespace
+          local namespaces = vim.api.nvim_get_namespaces()
+          for name, ns_id in pairs(namespaces) do
+            for _, linter in ipairs(linter_names) do
+              if name:find(linter) then
+                vim.diagnostic.reset(ns_id, 0)
+              end
+            end
+          end
+          print("Linting OFF for " .. ft)
+        else
+          lint.linters_by_ft[ft] = original_linters[ft] or {}
+          lint.try_lint()
+          print("Linting ON for " .. ft)
+        end
+      end, { desc = "Toggle linting for current filetype" })
     end,
   },
 
@@ -1018,6 +1044,9 @@ return {
         pattern = "markdown",
         callback = function()
           vim.opt_local.conceallevel = 2
+          vim.opt_local.wrap = true
+          vim.opt_local.linebreak = true
+          vim.opt_local.breakindent = true
         end,
       })
     end,
