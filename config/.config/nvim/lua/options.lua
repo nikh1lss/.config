@@ -36,6 +36,7 @@ opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 opt.undofile = true
 opt.timeoutlen = 300
+opt.ttimeoutlen = 5 --[[ WSL2 sucks ]]
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line

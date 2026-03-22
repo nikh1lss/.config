@@ -29,8 +29,8 @@ vim.keymap.set("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagn
 
 -- buffer navigation
 vim.keymap.set("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
-vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", { desc = "buffer goto next" })
-vim.keymap.set("n", "<S-tab>", "<cmd>bprevious<CR>", { desc = "buffer goto prev" })
+-- vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", { desc = "buffer goto next" })
+-- vim.keymap.set("n", "<S-tab>", "<cmd>bprevious<CR>", { desc = "buffer goto prev" })
 vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", { desc = "buffer close" })
 
 -- Comment

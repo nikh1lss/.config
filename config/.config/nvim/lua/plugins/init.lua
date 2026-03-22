@@ -869,6 +869,19 @@ return {
       { "<leader>rr", "<cmd>Recompile<cr>", desc = "Recompile" },
       { "<leader>rn", "<cmd>NextError<cr>", desc = "Next error" },
       { "<leader>rp", "<cmd>PrevError<cr>", desc = "Prev error" },
+      {
+        "<leader>rq",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == "compilation" then
+              vim.api.nvim_win_close(win, false)
+              return
+            end
+          end
+        end,
+        desc = "Close compile window",
+      },
     },
     config = function()
       vim.g.compile_mode = {
