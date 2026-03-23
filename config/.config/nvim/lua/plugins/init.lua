@@ -360,15 +360,35 @@ return {
         if lint.linters_by_ft[ft] and #lint.linters_by_ft[ft] > 0 then
           local linter_names = lint.linters_by_ft[ft]
           lint.linters_by_ft[ft] = {}
-          -- Reset diagnostics for each linter's namespace
-          local namespaces = vim.api.nvim_get_namespaces()
-          for name, ns_id in pairs(namespaces) do
-            for _, linter in ipairs(linter_names) do
-              if name:find(linter) then
-                vim.diagnostic.reset(ns_id, 0)
+
+          -- clear diagnostics, retrying to catch slow async linters
+          local function clear_diagnostics()
+            local namespaces = vim.api.nvim_get_namespaces()
+            for name, ns_id in pairs(namespaces) do
+              for _, linter in ipairs(linter_names) do
+                if name:find(linter) then
+                  vim.diagnostic.reset(ns_id, 0)
+                end
               end
             end
           end
+
+          clear_diagnostics()
+          local retries = 0
+          local timer = vim.uv.new_timer()
+          timer:start(
+            200,
+            300,
+            vim.schedule_wrap(function()
+              clear_diagnostics()
+              retries = retries + 1
+              if retries >= 3 then
+                timer:stop()
+                timer:close()
+              end
+            end)
+          )
+
           print("Linting OFF for " .. ft)
         else
           lint.linters_by_ft[ft] = original_linters[ft] or {}
