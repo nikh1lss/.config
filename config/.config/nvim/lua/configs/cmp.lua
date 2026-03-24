@@ -55,6 +55,8 @@ cmp.setup({
     end, { "i", "s" }),
   },
   sources = {
+    { name = "obsidian" },
+    { name = "obsidian_new" },
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },
