@@ -307,6 +307,7 @@ return {
         exclude = {
           -- needs external plugin
           "jdtls",
+          "kotlin_lsp",
         },
       },
       -- Remove old lsp handlers, use vim.lsp.enable to handle setup
@@ -549,6 +550,7 @@ return {
         "c_sharp",
         "json",
         "javadoc",
+        "kotlin",
       }
       require("nvim-treesitter").install(parsers)
 
@@ -1184,5 +1186,27 @@ return {
       },
       graph_style = "unicode",
     },
+  },
+  -- kotlin LSP (kotlin.nvim handles everything, like nvim-jdtls for java)
+  {
+    "AlexandrosAlexiou/kotlin.nvim",
+    ft = { "kotlin" },
+    dependencies = {
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+      "oil.nvim",
+      { "folke/trouble.nvim", opts = {} }, -- needed for :KotlinSymbols / :KotlinWorkspaceSymbols
+    },
+    config = function()
+      require("kotlin").setup({
+        root_markers = { "gradlew", ".git", "mvnw", "settings.gradle", "settings.gradle.kts" },
+        jre_path = nil, -- use Mason's bundled JRE
+        jdk_for_symbol_resolution = nil, -- auto-detect
+        jvm_args = { "-Xmx4g" },
+        inlay_hints = {
+          enabled = true,
+        },
+      })
+    end,
   },
 }
