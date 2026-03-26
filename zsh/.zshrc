@@ -151,3 +151,14 @@ eval "$(zoxide init zsh)"
 . "$HOME/.cargo/env"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# shell to signal that it is ready
+if [[ -n $TMUX_WAIT_SIGNAL ]]; then
+  _tmux_signal_ready() {
+    tmux wait-for -S "$TMUX_WAIT_SIGNAL"
+    unset TMUX_WAIT_SIGNAL
+    add-zsh-hook -d precmd _tmux_signal_ready
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _tmux_signal_ready
+fi

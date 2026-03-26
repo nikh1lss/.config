@@ -805,9 +805,9 @@ return {
         default_file_explorer = true,
         columns = {
           "type",
-          "icon",
           "permissions",
           "size",
+          "birthtime",
           "mtime",
         },
         view_options = {
@@ -887,7 +887,21 @@ return {
     },
     cmd = { "Compile", "Recompile", "NextError", "PrevError" },
     keys = {
-      { "<leader>rc", "<cmd>Compile<cr>", desc = "Compile" },
+      -- { "<leader>rc", "<cmd>Compile<cr>", desc = "Compile" },
+      {
+        "<leader>rc",
+        function()
+          local default = vim.g.compile_cmd or ""
+          vim.ui.input({ prompt = "Compile: ", default = default }, function(cmd)
+            if not cmd or cmd == "" then
+              return
+            end
+            vim.g.compile_cmd = cmd
+            vim.cmd("Compile " .. cmd)
+          end)
+        end,
+        desc = "Compile only",
+      },
       { "<leader>rr", "<cmd>Recompile<cr>", desc = "Recompile" },
       { "<leader>rn", "<cmd>NextError<cr>", desc = "Next error" },
       { "<leader>rp", "<cmd>PrevError<cr>", desc = "Prev error" },
@@ -903,6 +917,31 @@ return {
           end
         end,
         desc = "Close compile window",
+      },
+      {
+        "<leader>rx",
+        function()
+          local compile_cmd = vim.fn.input("Compile: ", vim.g.compile_cmd or "")
+          if compile_cmd == "" then
+            return
+          end
+          local run_cmd = vim.fn.input("Run: ", vim.g.run_cmd or "")
+          if run_cmd == "" then
+            return
+          end
+          vim.g.compile_cmd = compile_cmd
+          vim.g.run_cmd = run_cmd
+          local full = compile_cmd
+            .. " && (tmux select-window -t run 2>/dev/null"
+            .. " || (tmux new-window -n run -e TMUX_WAIT_SIGNAL=run-ready"
+            .. " && tmux wait-for run-ready))"
+            .. " && tmux send-keys -t run C-l"
+            .. " && tmux send-keys -t run '"
+            .. run_cmd
+            .. "' Enter"
+          vim.cmd("Compile " .. full)
+        end,
+        desc = "Compile & run",
       },
     },
     config = function()
