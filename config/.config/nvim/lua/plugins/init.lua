@@ -3,110 +3,6 @@
 return {
   "nvim-lua/plenary.nvim",
 
-  -- colourscheme
-  {
-    "rose-pine/neovim",
-    enabled = false,
-    name = "rose-pine",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("rose-pine").setup({
-        variant = "auto",
-        dark_variant = "main",
-        dim_inactive_windows = false,
-        extend_background_behind_borders = true,
-        styles = {
-          bold = true,
-          italic = false,
-          transparency = true,
-        },
-        highlight_groups = {
-          Comment = { italic = true },
-          ["@comment"] = { italic = true },
-          CmpBorder = { fg = "muted", bg = "none" },
-          CmpPmenu = { bg = "none" },
-        },
-      })
-      vim.cmd("colorscheme rose-pine")
-    end,
-  },
-
-  {
-    "ellisonleao/gruvbox.nvim",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent_mode = true,
-      overrides = {
-        CursorLineNr = { fg = "#fabd2f", bg = "", bold = true },
-        LineNr = { bg = "" },
-      },
-    },
-    config = function(_, opts)
-      require("gruvbox").setup(opts)
-      vim.cmd.colorscheme("gruvbox")
-    end,
-  },
-
-  {
-    "rebelot/kanagawa.nvim",
-    enabled = true,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("kanagawa").setup({
-        compile = false,
-        undercurl = true,
-        commentStyle = { italic = true },
-        functionStyle = {},
-        keywordStyle = { italic = false },
-        statementStyle = { bold = true },
-        typeStyle = {},
-        transparent = true,
-        dimInactive = false,
-        terminalColors = true,
-        theme = "dragon", --[[ wave, dragon, lotus ]]
-        background = {
-          dark = "wave",
-          light = "lotus",
-        },
-        colors = {
-          theme = {
-            all = {
-              ui = {
-                bg_gutter = "none",
-              },
-            },
-          },
-        },
-        overrides = function(colors)
-          local theme = colors.theme
-          return {
-            -- transparent floats
-            NormalFloat = { bg = "none" },
-            FloatBorder = { bg = "none" },
-            FloatTitle = { bg = "none" },
-
-            CmpBorder = { fg = theme.ui.shade0, bg = "none" },
-            CmpPmenu = { bg = "none" },
-
-            NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-            LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-            MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-
-            TelescopeBorder = { bg = "none" },
-            TelescopePromptBorder = { bg = "none" },
-            TelescopeResultsBorder = { bg = "none" },
-            TelescopePreviewBorder = { bg = "none" },
-          }
-        end,
-      })
-      vim.cmd("colorscheme kanagawa")
-    end,
-  },
-
   -- statusline
   {
     "nvim-lualine/lualine.nvim",
@@ -116,7 +12,8 @@ return {
       options = {
         theme = "auto",
         component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        -- section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         globalstatus = true,
       },
       sections = {
@@ -509,6 +406,7 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
+    lazy = false,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     opts = function()
@@ -804,6 +702,7 @@ return {
       require("oil").setup({
         default_file_explorer = true,
         columns = {
+          -- "icon",
           "type",
           "permissions",
           "size",
