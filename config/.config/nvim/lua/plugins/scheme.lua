@@ -124,7 +124,9 @@ return {
       vim.cmd.colorscheme("gruber-darker")
 
       local hl = vim.api.nvim_set_hl
-      hl(0, "Cursor", { fg = "#000000", bg = "#ffffff" })
+      -- hl(0, "Cursor", { fg = "#000000", bg = "#ffffff" })
+      hl(0, "MatchParen", { fg = "#ffffff", bg = "#52494e", bold = true })
+      -- hl(0, "MatchParen", { fg = "#ffffff", bg = "#7a7a7a", bold = true })
       hl(0, "Normal", { bg = "none" })
       hl(0, "NormalNC", { bg = "none" })
       hl(0, "NormalFloat", { bg = "none" })

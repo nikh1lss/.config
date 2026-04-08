@@ -103,6 +103,8 @@ sudo apt install -y \
     fd-find \
     cppcheck
 
+# ln -s /usr/bin/fdfind ~/.local/bin/fd
+
 # Update locate database
 echo "Updating locate database, this may take a while"
 sudo updatedb

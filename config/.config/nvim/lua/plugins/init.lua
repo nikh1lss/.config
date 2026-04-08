@@ -1125,6 +1125,7 @@ return {
       graph_style = "unicode",
     },
   },
+
   -- kotlin LSP (kotlin.nvim handles everything, like nvim-jdtls for java)
   {
     "AlexandrosAlexiou/kotlin.nvim",
@@ -1146,5 +1147,34 @@ return {
         },
       })
     end,
+  },
+
+  -- Claude Code WebSocket bridge (no UI, just connects external Claude CLI to Neovim)
+  {
+    "coder/claudecode.nvim",
+    lazy = false,
+    opts = {
+      terminal = {
+        provider = "none",
+      },
+    },
+  },
+
+  -- Diff preview for Claude Code edits
+  {
+    "Cannon07/claude-preview.nvim",
+    lazy = false,
+    opts = {
+      diff_layout = "vsplit", -- or "tab" or "inline"
+    },
+    keys = {
+      {
+        "<leader>dq",
+        function()
+          require("claude-preview").close_diff()
+        end,
+        desc = "Close Claude diff",
+      },
+    },
   },
 }

@@ -5,6 +5,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 # General Shortcuts
+alias structure="lsd --tree --depth 3"
 alias g=git
 alias gs="git status"
 alias n="nvim ."
