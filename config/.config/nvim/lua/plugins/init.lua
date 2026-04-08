@@ -1159,22 +1159,4 @@ return {
       },
     },
   },
-
-  -- Diff preview for Claude Code edits
-  {
-    "Cannon07/claude-preview.nvim",
-    lazy = false,
-    opts = {
-      diff_layout = "vsplit", -- or "tab" or "inline"
-    },
-    keys = {
-      {
-        "<leader>dq",
-        function()
-          require("claude-preview").close_diff()
-        end,
-        desc = "Close Claude diff",
-      },
-    },
-  },
 }

@@ -162,3 +162,5 @@ if [[ -n $TMUX_WAIT_SIGNAL ]]; then
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd _tmux_signal_ready
 fi
+
+export EDITOR=nvim
