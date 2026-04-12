@@ -103,3 +103,8 @@ function zpdf() {
     fi
   fi
 }
+
+# fzf git checkout
+gch() {
+git checkout $(git branch --all | fzf | tr -d "[[:space:]]")
+}
