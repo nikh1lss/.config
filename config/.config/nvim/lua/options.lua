@@ -7,7 +7,6 @@ local g = vim.g
 -- options
 opt.guicursor = ""
 opt.spell = false
-opt.signcolumn = "yes"
 opt.wrap = false
 opt.showmode = false -- conflicts with native statusline mode indicator, causing flickering
 opt.scrolloff = 8
@@ -15,7 +14,6 @@ opt.signcolumn = "yes"
 opt.sidescrolloff = 8
 opt.colorcolumn = "100"
 opt.ignorecase = true
-opt.smartcase = true
 opt.cursorline = true
 opt.termguicolors = true
 opt.conceallevel = 0
@@ -53,7 +51,6 @@ g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
 -- Search
-opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = false
 opt.incsearch = true
@@ -61,12 +58,9 @@ opt.incsearch = true
 -- Line Numbers
 opt.number = true
 opt.relativenumber = true
-opt.numberwidth = 4
-opt.ruler = false
 
 opt.laststatus = 3
 
-opt.cursorline = true
 opt.cursorlineopt = "number"
 
 -- Indenting
@@ -77,11 +71,8 @@ opt.tabstop = 4
 opt.softtabstop = 4
 
 opt.fillchars = { eob = " " }
-opt.ignorecase = true
-opt.smartcase = true
 
 -- Numbers
-opt.number = true
 opt.numberwidth = 4 -- initially 2
 opt.ruler = false
 

@@ -18,7 +18,7 @@ vim.keymap.set("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" 
 
 -- for less visual clutter?
 vim.keymap.set("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
-vim.keymap.set("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
+vim.keymap.set("n", "<leader>N", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
 
 vim.keymap.set({ "n", "x" }, "<leader>fm", function()
   require("conform").format({ lsp_fallback = true })
@@ -28,7 +28,7 @@ end, { desc = "general format file" })
 vim.keymap.set("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
 -- buffer navigation
-vim.keymap.set("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
+vim.keymap.set("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
 -- vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", { desc = "buffer goto next" })
 -- vim.keymap.set("n", "<S-tab>", "<cmd>bprevious<CR>", { desc = "buffer goto prev" })
 vim.keymap.set("n", "<leader>x", "<cmd>bdelete<CR>", { desc = "buffer close" })
@@ -82,8 +82,6 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", '"_dP')
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
