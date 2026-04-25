@@ -1,8 +1,8 @@
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
-local img = dofile(vim.fn.stdpath("config") .. "/lua/configs/alpha_images/eyes.lua")
-dashboard.config.layout[2] = img.header
+-- local img = dofile(vim.fn.stdpath("config") .. "/lua/configs/alpha_images/eyes.lua")
+-- dashboard.config.layout[2] = img.header
 dashboard.config.layout[1] = { type = "padding", val = 3 } -- top padding
 -- dashboard.config.layout[3] = { type = "padding", val = 3 } -- bottom padding
 
@@ -19,7 +19,18 @@ dashboard.section.buttons.val = {
 dashboard.section.footer.val = ""
 dashboard.section.footer.opts.hl = "AlphaFooter"
 
+-- Seed the header with milli's first frame
+local splashImage = "chrome"
+local splash = require("milli").load({ splash = splashImage })
+dashboard.config.layout[2] = {
+  type = "text",
+  val = splash.frames[1],
+  opts = { position = "center", hl = "DashboardHeader" },
+}
+dashboard.config.layout[1] = { type = "padding", val = 3 }
+
 alpha.setup(dashboard.opts)
+require("milli").alpha({ splash = splashImage, loop = true })
 
 -- Cursor wrapping for dashboard buttons
 vim.api.nvim_create_autocmd("User", {
@@ -91,5 +102,35 @@ vim.api.nvim_create_autocmd("User", {
     dashboard.section.footer.type = "group"
     dashboard.section.footer.opts = { spacing = 0 }
     pcall(vim.cmd.AlphaRedraw)
+  end,
+})
+
+-- Fix: force filetype detection when opening a file from alpha
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AlphaReady",
+  callback = function()
+    vim.g.alpha_was_open = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  callback = function()
+    if not vim.g.alpha_was_open then
+      return
+    end
+
+    local buf = vim.api.nvim_get_current_buf()
+    local name = vim.api.nvim_buf_get_name(buf)
+    local bt = vim.bo[buf].buftype
+
+    if bt ~= "" or name == "" then
+      return
+    end
+
+    vim.g.alpha_was_open = false
+
+    vim.schedule(function()
+      vim.cmd("doautocmd BufReadPost " .. vim.fn.fnameescape(name))
+    end)
   end,
 })

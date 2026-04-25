@@ -556,7 +556,7 @@ return {
   {
     "goolord/alpha-nvim",
     lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons", "amansingh-afk/milli.nvim" },
     config = function()
       require("configs.alpha")
     end,
