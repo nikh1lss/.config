@@ -1,4 +1,4 @@
-local scheme = "gruber-darker"
+local scheme = "kanagawa"
 
 return {
   {
