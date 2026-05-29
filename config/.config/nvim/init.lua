@@ -1,17 +1,16 @@
 vim.g.mapleader = " "
 
--- xclip invocation error for Windows
 vim.g.clipboard = {
-  name = "WslClipboard",
+  name = "win32yank",
   copy = {
-    ["+"] = "clip.exe",
-    ["*"] = "clip.exe",
+    ["+"] = "win32yank.exe -i --crlf",
+    ["*"] = "win32yank.exe -i --crlf",
   },
   paste = {
-    ["+"] = "powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw))",
-    ["*"] = "powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw))",
+    ["+"] = "win32yank.exe -o --lf",
+    ["*"] = "win32yank.exe -o --lf",
   },
-  cache_enabled = 0,
+  cache_enabled = 1,
 }
 
 -- bootstrap lazy and all plugins

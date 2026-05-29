@@ -30,7 +30,7 @@ opt.splitright = true
 opt.splitkeep = "screen"
 
 -- Editing
-opt.clipboard = "unnamedplus"
+opt.clipboard = ""
 opt.mouse = "a"
 opt.undofile = true
 opt.timeoutlen = 300
