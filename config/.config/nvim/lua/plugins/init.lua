@@ -877,6 +877,7 @@ return {
         { open = "<", close = ">" },
       },
       ignore_beginning = true,
+      enabled = false,
       exclude = {},
     },
   },
@@ -888,7 +889,7 @@ return {
     opts = {
       modes = {
         char = {
-          jump_labels = true,
+          enabled = false,
         },
       },
     },

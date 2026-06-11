@@ -1,4 +1,4 @@
-vim.keymap.set("n", ";", ":", { desc = "CMD enter command mode" })
+-- vim.keymap.set("n", ";", ":", { desc = "CMD enter command mode" })
 
 -- visual block mode
 vim.keymap.set("n", "<C-q>", "<C-v>", { noremap = true, desc = "visual block mode" })
