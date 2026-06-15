@@ -1,4 +1,4 @@
-local scheme = "rose-pine"
+local scheme = "koda"
 
 return {
   {
@@ -148,6 +148,37 @@ return {
       hl(0, "TelescopePromptBorder", { bg = "none" })
       hl(0, "TelescopeResultsBorder", { bg = "none" })
       hl(0, "TelescopePreviewBorder", { bg = "none" })
+    end,
+  },
+
+  {
+    "oskarnurm/koda.nvim",
+    enabled = scheme == "koda",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("koda").setup({
+        transparent = true,
+        theme = {
+          dark = "dark",
+          light = "light",
+        },
+        styles = {
+          functions = { bold = true },
+          keywords = {},
+          comments = { italic = true },
+          strings = {},
+          constants = {},
+        },
+        on_highlights = function(hl, c)
+          hl.CmpPmenu = { bg = "none" }
+          hl.TelescopeBorder = { bg = "none" }
+          hl.TelescopePromptBorder = { bg = "none" }
+          hl.TelescopeResultsBorder = { bg = "none" }
+          hl.TelescopePreviewBorder = { bg = "none" }
+        end,
+      })
+      vim.cmd("colorscheme koda-dark")
     end,
   },
 }
