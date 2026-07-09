@@ -964,7 +964,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = false,
+    enabled = true,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))
@@ -1071,14 +1071,23 @@ return {
         },
       })
 
+      local function markdown_win_opts()
+        vim.opt_local.conceallevel = 2
+        vim.opt_local.wrap = true
+        vim.opt_local.linebreak = true
+        vim.opt_local.breakindent = true
+      end
+
+      -- FileType covers the initial read; BufWinEnter re-applies the
+      -- window-local opts when an already-loaded md buffer is shown in a
+      -- window (e.g. jumping via harpoon, which doesn't re-fire FileType).
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
-        callback = function()
-          vim.opt_local.conceallevel = 2
-          vim.opt_local.wrap = true
-          vim.opt_local.linebreak = true
-          vim.opt_local.breakindent = true
-        end,
+        callback = markdown_win_opts,
+      })
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        pattern = "*.md",
+        callback = markdown_win_opts,
       })
     end,
     keys = {

@@ -20,7 +20,7 @@ dashboard.section.footer.val = ""
 dashboard.section.footer.opts.hl = "AlphaFooter"
 
 -- Seed the header with milli's first frame
-local splashImage = "badge"
+local splashImage = "dancerramp"
 local splash = require("milli").load({ splash = splashImage })
 dashboard.config.layout[2] = {
   type = "text",
