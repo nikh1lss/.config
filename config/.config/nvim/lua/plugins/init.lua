@@ -696,7 +696,7 @@ return {
     lazy = false,
     keys = {
       { "-", "<cmd>Oil<CR>", desc = "Open parent directory" },
-      { "<leader>o", "<cmd>Oil --float<CR>", desc = "Open Oil (float)" },
+      -- { "<leader>o", "<cmd>Oil --float<CR>", desc = "Open Oil (float)" },
     },
     config = function()
       require("oil").setup({
@@ -964,7 +964,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = true,
+    enabled = false,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))
@@ -1117,7 +1117,7 @@ return {
       { "<leader>gc", "<cmd>Neogit commit<CR>", desc = "Neogit commit" },
       { "<leader>gp", "<cmd>Neogit push<CR>", desc = "Neogit push" },
       { "<leader>gl", "<cmd>Neogit pull<CR>", desc = "Neogit pull" },
-      { "<leader>gb", "<cmd>Neogit branch<CR>", desc = "Neogit branch" },
+      { "<leader>gr", "<cmd>Neogit branch<CR>", desc = "Neogit branch" },
       { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
       { "<leader>gD", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
       { "<leader>gf", "<cmd>DiffviewFileHistory %<CR>", desc = "File history" },

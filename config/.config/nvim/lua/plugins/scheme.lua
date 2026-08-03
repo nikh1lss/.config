@@ -1,4 +1,4 @@
-local scheme = "koda"
+local scheme = "kanagawa"
 
 return {
   {

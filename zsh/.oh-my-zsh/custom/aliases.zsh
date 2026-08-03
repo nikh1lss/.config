@@ -8,6 +8,7 @@ alias .....="cd ../../../.."
 alias structure="lsd --tree --depth 3"
 alias n="nvim ."
 alias c="clear"
+alias e="exit"
 alias ccd="pwd | c" # copy current directory
 
 # Print each PATH entry on a seperate line

@@ -95,3 +95,8 @@ vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "yank to clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "paste from clipboard" })
+
+-- organize imports
+vim.keymap.set("n", "<leader>oi", function()
+  require("jdtls").organize_imports()
+end, { desc = "Java organize imports" })

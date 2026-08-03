@@ -7,7 +7,6 @@ fastfetch
 #TPM
 **/tmux/plugins/
 
-
 # htop
 htop
 
@@ -16,3 +15,6 @@ alpha_images
 
 # claude-code-url-handler
 mimeapps.list
+
+# kotlin-lsp
+JetBrains
