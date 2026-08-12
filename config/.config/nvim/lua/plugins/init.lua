@@ -236,6 +236,13 @@ return {
         cpp = { "cppcheck" },
       }
 
+      local original_linters = vim.deepcopy(lint.linters_by_ft)
+
+      -- filetypes that start with linting off, toggle on with <leader>lt
+      for _, ft in ipairs({ "java" }) do
+        lint.linters_by_ft[ft] = {}
+      end
+
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
@@ -249,8 +256,6 @@ return {
       vim.keymap.set("n", "<leader>ll", function()
         lint.try_lint()
       end, { desc = "Trigger linting for current file" })
-
-      local original_linters = vim.deepcopy(lint.linters_by_ft)
 
       -- Toggle linting for current filetype
       vim.keymap.set("n", "<leader>lt", function()
