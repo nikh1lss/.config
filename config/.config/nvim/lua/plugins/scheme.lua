@@ -1,4 +1,4 @@
-local scheme = "rose-pine"
+local scheme = "kanagawa"
 
 return {
   {

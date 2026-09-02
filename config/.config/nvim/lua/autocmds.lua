@@ -43,3 +43,37 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[ev.buf].bufhidden = "wipe"
   end,
 })
+
+-- remember window view (scroll/topline, not just cursor pos) per buffer,
+-- so jumping away (harpoon, :b, telescope) and back keeps zz/zt/etc.
+do
+  local views = {}
+  local group = vim.api.nvim_create_augroup("RememberView", { clear = true })
+
+  vim.api.nvim_create_autocmd("BufLeave", {
+    group = group,
+    callback = function(args)
+      if vim.bo[args.buf].buftype ~= "" then
+        return
+      end
+      views[args.buf] = vim.fn.winsaveview()
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("BufWinEnter", {
+    group = group,
+    callback = function(args)
+      local view = views[args.buf]
+      if view then
+        vim.fn.winrestview(view)
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+    group = group,
+    callback = function(args)
+      views[args.buf] = nil
+    end,
+  })
+end

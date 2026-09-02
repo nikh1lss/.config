@@ -72,6 +72,9 @@ opt.softtabstop = 4
 
 opt.fillchars = { eob = " " }
 
+-- keep window view (not just cursor) when jumping via jumplist (<C-o>/<C-i>)
+opt.jumpoptions:append("view")
+
 -- Numbers
 opt.numberwidth = 4 -- initially 2
 opt.ruler = false
