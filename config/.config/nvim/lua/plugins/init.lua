@@ -198,6 +198,7 @@ return {
         "jdtls",
         "clangd",
         "rust_analyzer",
+        "kotlin_lsp",
       },
       automatic_installation = true,
       automatic_enable = {
@@ -463,8 +464,25 @@ return {
           -- try to start treesitter highlighting
           pcall(vim.treesitter.start, args.buf)
 
-          -- enable treesitter-based indentation
-          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          -- Only point indentexpr at treesitter when the language actually has an
+          -- indents query (whether from nvim-treesitter or from us). Setting it for every filetype
+          -- would replace the runtime's
+          -- indent/<ft>.vim, and with no query treesitter returns 0 for every line --
+          -- so unsupported languages would lose indenting instead of keeping their
+          -- built-in indenter.
+          --
+          -- The lookup checks the whole runtimepath, so it finds both nvim-treesitter's
+          -- queries and our own. Kotlin has no indent query, so we add
+          -- queries/kotlin/indents.scm to give it treesitter-based indentation.
+          -- (i.e. indentation that is computed from the treesitter indent engine from nvim-treesitter)
+
+          local ok, indents = pcall(function()
+            local parser = vim.treesitter.get_parser(args.buf)
+            return parser and vim.treesitter.query.get(parser:lang(), "indents")
+          end)
+          if ok and indents then
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
 
           -- enable treesitter-based folding
           vim.wo[0][0].foldmethod = "expr"

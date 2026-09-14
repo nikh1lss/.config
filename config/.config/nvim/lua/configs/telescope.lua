@@ -13,7 +13,8 @@ local no_titles = {
 
 return {
   defaults = {
-    prompt_prefix = " λ ", --[[   ]]
+    -- prompt_prefix = " λ ", --[[   ]]
+    prompt_prefix = " > ", --[[   ]]
     selection_caret = " > ", --[[ >, ➮ ]]
     entry_prefix = "   ",
     sorting_strategy = "descending",
