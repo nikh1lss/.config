@@ -1,3 +1,13 @@
+# If this shell was started in a directory that no longer exists, getcwd()
+# fails and zsh falls back to PWD='.'. nvm's nvm_find_project_dir then spins
+# forever on `${path_%/*}` (there is no '/' in '.' to strip). Bail to $HOME
+# first. Happens when tmux forks a pane and the server's own cwd was deleted.
+if [[ $PWD == . ]]; then
+  print -u2 "zsh: started in a deleted directory; defaulted to ~"
+  print -u2 "zsh: if tmux server's cwd is deleted — new panes land in ~ until 'tmux kill-server'"
+  builtin cd -q ~
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
