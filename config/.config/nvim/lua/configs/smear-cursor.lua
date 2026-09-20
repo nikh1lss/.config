@@ -22,9 +22,9 @@ local options = {
   matrix_pixel_threshold = 0.5,
 
   -- Smears will blend better on all backgrounds.
-  legacy_computing_symbols_support = true,
-  legacy_computing_symbols_support_vertical_bars = true,
-  use_diagonal_blocks = true,
+  legacy_computing_symbols_support = false,
+  legacy_computing_symbols_support_vertical_bars = false,
+  use_diagonal_blocks = false,
 
   -- Sets animation framerate
   time_interval = 1000 / 180, -- milliseconds (1000 / fps)

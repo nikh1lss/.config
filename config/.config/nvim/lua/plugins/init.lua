@@ -987,7 +987,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = false,
+    enabled = true,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))
@@ -1189,6 +1189,10 @@ return {
     opts = {
       terminal = {
         provider = "none",
+      },
+      diff_opts = {
+        open_in_new_tab = true,
+        layout = "vertical",
       },
     },
   },
