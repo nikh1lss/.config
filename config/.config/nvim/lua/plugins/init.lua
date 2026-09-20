@@ -987,7 +987,7 @@ return {
   {
     "sphamba/smear-cursor.nvim",
     lazy = false,
-    enabled = true,
+    enabled = false,
     config = function()
       local smear = require("smear_cursor")
       smear.setup(require("configs.smear-cursor"))
@@ -1186,14 +1186,8 @@ return {
   {
     "coder/claudecode.nvim",
     lazy = false,
-    opts = {
-      terminal = {
-        provider = "none",
-      },
-      diff_opts = {
-        open_in_new_tab = true,
-        layout = "vertical",
-      },
-    },
+    config = function()
+      require("configs.claudecode").setup()
+    end,
   },
 }
