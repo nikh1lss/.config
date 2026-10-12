@@ -20,6 +20,7 @@ vim.keymap.set("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" 
 vim.keymap.set("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
 vim.keymap.set("n", "<leader>N", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
 
+-- format on bind
 vim.keymap.set({ "n", "x" }, "<leader>fm", function()
   require("conform").format({ lsp_fallback = true })
 end, { desc = "general format file" })

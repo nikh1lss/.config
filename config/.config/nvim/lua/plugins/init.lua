@@ -174,7 +174,12 @@ return {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = function()
-      return require("configs.mason")
+      local opts = require("configs.mason")
+      opts.registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      }
+      return opts
     end,
   },
 
@@ -1188,6 +1193,120 @@ return {
     lazy = false,
     config = function()
       require("configs.claudecode").setup()
+    end,
+  },
+
+  {
+    "kawre/leetcode.nvim",
+    enabled = false,
+    lazy = vim.fn.argv(0, -1) ~= "leetcode.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      lang = "java",
+      plugins = {},
+      injector = {
+        java = { before = "import java.util.*;" },
+      },
+    },
+  },
+
+  -- {
+  --   "seblyng/roslyn.nvim",
+  --   ---@module 'roslyn.config'
+  --   ---@type RoslynNvimConfig
+  --   opts = {
+  --     -- your configuration comes here; leave empty for default settings
+  --   },
+  -- },
+
+  -- C# LSP (roslyn.nvim handles everything, like nvim-jdtls for java)
+  -- :Roslyn target to switch solution when a repo has more than one .sln
+  {
+    "seblyng/roslyn.nvim",
+    ft = { "cs", "razor" },
+    dependencies = { "mason.nvim" },
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
+    opts = {
+      filewatching = "roslyn",
+      broad_search = false,
+      lock_target = false,
+    },
+    -- server settings go through vim.lsp.config under the name "roslyn"
+    -- must run in init: plugin/roslyn.lua calls vim.lsp.enable on load, which can
+    -- start the client before config() runs, leaving it without these settings
+    init = function()
+      vim.lsp.config("roslyn", {
+        settings = {
+          ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+            csharp_enable_inlay_hints_for_types = true,
+            dotnet_enable_inlay_hints_for_parameters = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+          },
+
+          -- already true by default, making it explicit
+          ["csharp|completion"] = {
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_provide_regex_completions = true,
+          },
+
+          -- what is the point of grr? also can bind :Telescope lsp_references
+          -- ["csharp|code_lens"] = {
+          --   dotnet_enable_references_code_lens = true,
+          -- },
+
+          ["csharp|background_analysis"] = {
+            dotnet_analyzer_diagnostics_scope = "openFiles",
+            dotnet_compiler_diagnostics_scope = "fullSolution",
+          },
+          ["csharp|formatting"] = {
+            dotnet_organize_imports_on_format = true,
+          },
+
+          -- already true by default, making it explicit
+          ["csharp|symbol_search"] = {
+            dotnet_search_reference_assemblies = true,
+          },
+        },
+      })
+    end,
+    config = function(_, opts)
+      -- inlay hints start off; <leader>uh toggles them in C# buffers
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not (client and client.name == "roslyn") then
+            return
+          end
+
+          -- errors across the whole solution, like jdtls
+          -- this is for dotnet_compiler_diagnostics_scope = "fullSolution",
+          local function refresh_workspace_diagnostics()
+            vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+          end
+          refresh_workspace_diagnostics()
+          vim.api.nvim_create_autocmd("BufWritePost", {
+            group = vim.api.nvim_create_augroup("roslyn_ws_diag_" .. args.buf, { clear = true }),
+            buffer = args.buf,
+            callback = refresh_workspace_diagnostics,
+          })
+
+          vim.keymap.set("n", "<leader>uh", function()
+            local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf })
+            vim.lsp.inlay_hint.enable(not enabled, { bufnr = args.buf })
+          end, { buffer = args.buf, desc = "Toggle inlay hints" })
+        end,
+      })
+
+      require("roslyn").setup(opts)
     end,
   },
 }
