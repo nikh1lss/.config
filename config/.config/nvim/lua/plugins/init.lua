@@ -418,10 +418,21 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     lazy = false,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    cmd = "Telescope",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+
+    -- since lazy = false
+    -- cmd = "Telescope",
+
     opts = function()
       return require("configs.telescope")
+    end,
+    config = function(_, opts)
+      local telescope = require("telescope")
+      telescope.setup(opts)
+      telescope.load_extension("fzf")
     end,
   },
 

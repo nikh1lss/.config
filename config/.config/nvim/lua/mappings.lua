@@ -64,6 +64,15 @@ vim.keymap.set(
   { desc = "telescope find all files" }
 )
 
+-- Bind grr to Telescope, and when you want the quickfix list, press <C-q> inside the picker to
+-- send all results there (<M-q> sends only the selected ones).
+vim.keymap.set("n", "grr", function()
+  require("telescope.builtin").lsp_references({
+    include_declaration = false,
+    show_line = false, -- shorter entries; the preview shows the line anyway
+  })
+end, { desc = "LSP references (Telescope)" })
+
 -- gitsigns
 vim.keymap.set("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "git toggle blame" })
 vim.keymap.set("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "git full file blame" })

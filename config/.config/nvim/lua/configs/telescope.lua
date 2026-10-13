@@ -1,9 +1,15 @@
--- vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#45475a", bold = true })
-vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#df6a8b" })
-vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { fg = "#df6a8b" })
-vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#000000", bg = "#FFFFFF" })
-vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#000000", bg = "#FFFFFF" })
-vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = "#000000", bg = "#FFFFFF" })
+-- re-applied on ColorScheme so theme reloads don't wipe them
+local function telescope_hl()
+  local hl = vim.api.nvim_set_hl
+  -- hl(0, "TelescopeSelection", { bg = "#45475a", bold = true })
+  hl(0, "TelescopeSelectionCaret", { fg = "#df6a8b" })
+  hl(0, "TelescopePromptPrefix", { fg = "#df6a8b" })
+  hl(0, "TelescopeResultsTitle", { fg = "#000000", bg = "#FFFFFF" })
+  hl(0, "TelescopePromptTitle", { fg = "#000000", bg = "#FFFFFF" })
+  hl(0, "TelescopePreviewTitle", { fg = "#000000", bg = "#FFFFFF" })
+end
+telescope_hl()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = telescope_hl })
 
 local no_titles = {
   results_title = false,
@@ -48,6 +54,12 @@ return {
     buffers = no_titles,
   },
 
-  extensions_list = { "themes", "terms" },
-  extensions = {},
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    },
+  },
 }
